@@ -33,6 +33,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
+          java-version: '17'
           distribution: 'temurin'
           java-version-file: '.java-version'
           cache: 'maven'
@@ -42,7 +43,10 @@ jobs:
         # Run non-interactive, package (with compile+test),
         # ignore snapshot updates, because they are likely to have breaking changes, enforce checksums
         run: mvn test --batch-mode --threads 2.0C --no-snapshot-updates --strict-checksums --file pom.xml
-
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          path: target/*.jar
   dependency:
     runs-on: ubuntu-latest
     permissions:
