@@ -74,8 +74,7 @@ public abstract class BedrockService<B> {
                 "Could not check whether Bedrock Player {}'s name conflicts a premium Java player's name.",
                 username);
 
-            kickPlayer(source, username, "Could not check if your name conflicts an existing "
-                + "premium Java account's name. This is usually a serverside error.");
+            kickPlayer(source, username, "连接 Mojang 身份验证服务器失败，请再试一次");
         } catch (RateLimitException rateLimitException) {
             core.getPlugin().getLog().warn("Mojang API rate limit hit");
             kickPlayer(source, username, "Could not check if your name conflicts an existing premium "
