@@ -81,7 +81,7 @@ public abstract class JoinManagement<P extends C, C, S extends LoginSource> {
         profile.setLastIp(ip);
         if (profile.isExistingPlayer()) {
             if (profile.isOnlinemodePreferred()) {
-                core.getPlugin().getLog().info("Requesting premium login for registered player: {}", username);
+                core.getPlugin().getLog().info("正在为已注册玩家: {} 请求正版登录", username);
                 requestPremiumLogin(source, profile, username, true);
             } else {
                 if (isValidUsername(source, profile)) {
@@ -96,7 +96,7 @@ public abstract class JoinManagement<P extends C, C, S extends LoginSource> {
     private void performNewPlayerLogin(String username, S source, String ip, StoredProfile profile) {
         try {
             if (core.hasFailedLogin(ip, username)) {
-                core.getPlugin().getLog().info("Second attempt login -> cracked {}", username);
+                core.getPlugin().getLog().info("第二次尝试登录 -> 将 {} 视为离线玩家", username);
 
                 //first login request failed so make a cracked session
                 startCrackedSession(source, profile, username);
@@ -121,9 +121,9 @@ public abstract class JoinManagement<P extends C, C, S extends LoginSource> {
                 startCrackedSession(source, profile, username);
             }
         } catch (RateLimitException rateLimitEx) {
-            core.getPlugin().getLog().error("Mojang's rate limit reached for {}. The public IPv4 address of this"
-                    + " server issued more than 600 Name -> UUID requests within 10 minutes. After those 10"
-                    + " minutes we can make requests again.", username);
+            core.getPlugin().getLog().error("已达到 Mojang 针对 {} 的速率限制。此服务器的公共 "
+                    + "IPv4 地址在 10 分钟内发出了超过 600 次名称转 UUID 请求。10 分钟"
+                    + "后，我们才能再次发出请求。", username);
         } catch (Exception ex) {
             core.getPlugin().getLog().error("Failed to check premium state of {}", username, ex);
         }
@@ -131,8 +131,8 @@ public abstract class JoinManagement<P extends C, C, S extends LoginSource> {
 
     protected boolean isValidUsername(LoginSource source, StoredProfile profile) {
         if (bedrockService != null && bedrockService.isUsernameForbidden(profile)) {
-            core.getPlugin().getLog().info("Floodgate Prefix detected on cracked player");
-            source.kick("Your username contains illegal characters");
+            core.getPlugin().getLog().info("在离线的玩家名里检测到 Floodgate 前缀");
+            source.kick("你的用户名包含非法字符或前缀");
             return false;
         }
 
@@ -140,7 +140,7 @@ public abstract class JoinManagement<P extends C, C, S extends LoginSource> {
     }
 
     private boolean isUsernameAvailable(S source, String username, StoredProfile profile) throws Exception {
-        core.getPlugin().getLog().info("GameProfile {} uses a premium username", username);
+        core.getPlugin().getLog().info("玩家名 {} 是一个正版账号的名字", username);
         if (core.getConfig().get("autoRegister", false) && (authHook == null || !authHook.isRegistered(username))) {
             requestPremiumLogin(source, profile, username, false);
             return true;
@@ -156,12 +156,12 @@ public abstract class JoinManagement<P extends C, C, S extends LoginSource> {
             if (storedProfile != null) {
                 if (storedProfile.getFloodgate() == FloodgateState.TRUE) {
                     core.getPlugin().getLog()
-                            .info("Player {} is already stored by FastLogin as a Bedrock Edition player.", username);
+                            .info("玩家 {} 已被 FastLogin 记录为基岩版玩家。", username);
                     return false;
                 }
 
                 //uuid exists in the database
-                core.getPlugin().getLog().info("GameProfile {} changed it's username", profile);
+                core.getPlugin().getLog().info("游戏资料 {} 更改了其用户名", profile);
 
                 //update the username to the new one in the database
                 storedProfile.setPlayerName(username);

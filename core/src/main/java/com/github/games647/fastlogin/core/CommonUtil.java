@@ -87,7 +87,7 @@ public final class CommonUtil {
         Thread.currentThread().setContextClassLoader(pluginLoader);
 
         // Trigger provider search
-        LoggerFactory.getLogger(parent.getName()).info("Initialize logging service");
+        LoggerFactory.getLogger(parent.getName()).info("正在初始化日志服务");
         try {
             parent.setLevel(Level.ALL);
             return createJDKLogger(parent);

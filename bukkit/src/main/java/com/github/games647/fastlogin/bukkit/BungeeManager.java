@@ -101,7 +101,7 @@ public class BungeeManager {
             plugin.getLog().info("Found enabled proxy configuration");
             plugin.getLog().info("Remember to follow the proxy guide to complete your setup");
         } else {
-            plugin.getLog().warn("Disabling Minecraft proxy configuration. Assuming direct connections from now on.");
+            plugin.getLog().warn("正在禁用 Minecraft 代理配置。从现在开始假定为直接连接。");
         }
     }
 

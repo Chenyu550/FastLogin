@@ -83,7 +83,7 @@ public class DelayedAuthHook implements Runnable {
         }
 
         if (plugin.getCore().getAuthPluginHook() == null) {
-            plugin.getLog().info("Hooking into auth plugin: {}", authPluginHook.getClass().getSimpleName());
+            plugin.getLog().info("正在挂接身份验证插件: {}", authPluginHook.getClass().getSimpleName());
             plugin.getCore().setAuthPluginHook(authPluginHook);
         }
 

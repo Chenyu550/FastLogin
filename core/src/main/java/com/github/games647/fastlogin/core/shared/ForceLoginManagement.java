@@ -115,7 +115,7 @@ public abstract class ForceLoginManagement<P extends C, C, L extends LoginSessio
     }
 
     public boolean forceLogin(P player) {
-        core.getPlugin().getLog().info("Logging player {} in", getName(player));
+        core.getPlugin().getLog().info("正在登录玩家 {}", getName(player));
 
         boolean success = core.getAuthPluginHook().forceLogin(player);
         if (success) {

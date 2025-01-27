@@ -44,7 +44,7 @@ public class AsyncScheduler extends AbstractAsyncScheduler {
     public AsyncScheduler(Logger logger, Executor processingPool) {
         super(logger, Executors.newVirtualThreadPerTaskExecutor());
 
-        logger.info("Using optimized green threads with Java 21");
+        logger.info("正在使用 Java 21 优化的绿色线程");
     }
 
     @Override
@@ -52,7 +52,7 @@ public class AsyncScheduler extends AbstractAsyncScheduler {
         return CompletableFuture
                 .runAsync(() -> process(task), processingPool)
                 .exceptionally(error -> {
-                    logger.warn("Error occurred on thread pool", error);
+                    logger.warn("线程池发生错误", error);
                     return null;
                 });
     }
@@ -71,7 +71,7 @@ public class AsyncScheduler extends AbstractAsyncScheduler {
                 currentlyRunning.getAndDecrement();
             }
         }, processingPool).exceptionally(error -> {
-            logger.warn("Error occurred on thread pool", error);
+            logger.warn("线程池发生错误", error);
             return null;
         });
     }

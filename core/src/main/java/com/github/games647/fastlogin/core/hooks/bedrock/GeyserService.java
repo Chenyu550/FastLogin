@@ -55,7 +55,7 @@ public class GeyserService extends BedrockService<GeyserSession> {
             return false;
         }
         if ("true".equals(allowConflict)) {
-            core.getPlugin().getLog().info("Skipping name conflict checking for player {}", username);
+            core.getPlugin().getLog().info("正在跳过对玩家 {} 的名字冲突检查。", username);
         } else {
             super.checkNameConflict(username, source);
         }

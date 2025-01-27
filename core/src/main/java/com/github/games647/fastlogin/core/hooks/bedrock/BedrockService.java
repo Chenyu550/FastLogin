@@ -71,21 +71,21 @@ public abstract class BedrockService<B> {
             premiumUUID = core.getResolver().findProfile(username);
         } catch (IOException ioEx) {
             core.getPlugin().getLog().error(
-                "Could not check whether Bedrock Player {}'s name conflicts a premium Java player's name.",
+                "无法检查基岩版玩家 {} 的名字是否与正版 Java 版玩家的名字冲突。",
                 username);
 
-            kickPlayer(source, username, "Could not check if your name conflicts an existing "
-                + "premium Java account's name. This is usually a serverside error.");
+            kickPlayer(source, username, "连接微软会话服务器超时。"
+                + "这通常是服务器上的错误。");
         } catch (RateLimitException rateLimitException) {
-            core.getPlugin().getLog().warn("Mojang API rate limit hit");
-            kickPlayer(source, username, "Could not check if your name conflicts an existing premium "
-                + "Java account's name. Try again in a few minutes");
+            core.getPlugin().getLog().warn("已达到 Mojang API 速率限制");
+            kickPlayer(source, username, "无法检查您的名字是否与现有正版 Java 玩家名"
+                + "冲突。因为已达到 Mojang API 速率限制。请过几分钟再试");
         }
 
         if (premiumUUID.isPresent()) {
-            core.getPlugin().getLog().info("Bedrock Player {}'s name conflicts an existing premium Java account's name",
+            core.getPlugin().getLog().info("基岩版玩家 {} 的名字与现有的正版 Java 账号名冲突。",
                     username);
-            kickPlayer(source, username, "Your name conflicts an existing premium Java account's name");
+            kickPlayer(source, username, "你的名字与现有的正版 Java 玩家名冲突。");
         }
     }
 
@@ -93,7 +93,7 @@ public abstract class BedrockService<B> {
         try {
             source.kick(message);
         } catch (Exception ex) {
-            core.getPlugin().getLog().error("Could not kick Player {}", username, ex);
+            core.getPlugin().getLog().error("无法踢出玩家 {}", username, ex);
         }
     }
 

@@ -87,7 +87,7 @@ public class FloodgateService extends BedrockService<FloodgatePlayer> {
             || "linked".equals(allowConflict) && !isLinked) {
             super.checkNameConflict(username, source);
         } else {
-            core.getPlugin().getLog().info("Skipping name conflict checking for player {}", username);
+            core.getPlugin().getLog().info("正在跳过对玩家 {} 的名字冲突检查。", username);
         }
 
         //Floodgate users don't need Java specific checks

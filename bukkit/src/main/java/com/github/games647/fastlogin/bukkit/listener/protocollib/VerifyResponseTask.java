@@ -155,12 +155,12 @@ public class VerifyResponseTask implements Runnable {
                 //user tried to fake an authentication
                 disconnect(
                         "invalid-session",
-                        "Session server rejected incoming connection for GameProfile {} ({}). Possible reasons are "
-                                + "1) Client IP address contacting Mojang and server during server join were different "
-                                + "(Do you use a reverse proxy? -> Enable IP forwarding, "
-                                + "or disable the feature in the config). "
-                                + "2) Player is offline, but tried to bypass the authentication "
-                                + "3) Client uses an outdated username for connecting (Fix: Restart client)",
+                        "会话服务器拒绝 GameProfile {} ({}) 的传入连接。可能的原因包括 "
+                                + "1) 客户端加入服务器期间联系 Mojang 和此服务器的 IP 地址不同 "
+                                + "(您使用反向代理吗？-> 启用 IP 转发, "
+                                + "或者在配置中禁用该功能). "
+                                + "2) 玩家处于离线状态，但试图绕过身份验证 "
+                                + "3) 客户端使用过时的用户名进行连接（修复：重启客户端）",
                         requestedUsername, address
                 );
 
@@ -170,19 +170,19 @@ public class VerifyResponseTask implements Runnable {
                             requestedUsername
                     );
                 } else {
-                    plugin.getLog().warn("If you think this is an error, please verify that the incoming "
-                            + "IP address {} is not associated with a server hosting company.", address);
+                    plugin.getLog().warn("如果您认为这是一个错误，请验证传入的 IP 地址 "
+                            + "{} 是否与服务器托管公司相关联。", address);
                 }
 
                 plugin.getLog().warn(ADDRESS_VERIFY_WARNING);
             }
         } catch (IOException ioEx) {
-            disconnect("error-kick", "Failed to connect to session server", ioEx);
+            disconnect("error-kick", "无法连接到会话服务器", ioEx);
         }
     }
 
     private void encryptConnection(BukkitLoginSession session, String requestedUsername, Verification verification) {
-        plugin.getLog().info("Profile {} has a verified premium account", requestedUsername);
+        plugin.getLog().info("成功验证 {} 的正版账号所有权", requestedUsername);
         String realUsername = verification.getName();
         if (realUsername == null) {
             disconnect("invalid-session", "Username field null for {}", requestedUsername);
@@ -230,7 +230,7 @@ public class VerifyResponseTask implements Runnable {
     }
 
     private boolean enableEncryption(SecretKey loginKey) throws IllegalArgumentException {
-        plugin.getLog().info("Enabling onlinemode encryption for {}", player.getAddress());
+        plugin.getLog().info("正在为 {} 启用正版账号的通讯加密", player.getAddress());
         // Initialize method reflections
         if (encryptKeyMethod == null || encryptMethod == null) {
             Class<?> networkManagerClass = MinecraftReflection.getNetworkManagerClass();
@@ -269,7 +269,7 @@ public class VerifyResponseTask implements Runnable {
                 encryptMethod.invoke(networkManager, decryptionCipher, encryptionCipher);
             }
         } catch (Exception ex) {
-            disconnect("error-kick", "Couldn't enable encryption", ex);
+            disconnect("error-kick", "无法进行通讯加密，请加群了解更多或进行反馈", ex);
             return false;
         }
 

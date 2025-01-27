@@ -114,7 +114,7 @@ public class ProtocolLibListener extends PacketAdapter {
         Player sender = packetEvent.getPlayer();
         PacketType packetType = getOverriddenType(packetEvent.getPacketType());
 
-        plugin.getLog().info("New incoming packet {} from {}", packetType, sender.getName());
+        plugin.getLog().info("来自 {} 的新传入数据包 {}", sender.getName(), packetType);
         try {
             if (packetType == START) {
                 if (plugin.getFloodgateService() != null) {
@@ -151,14 +151,14 @@ public class ProtocolLibListener extends PacketAdapter {
                 plugin.getLog().warn("Unknown packet type received {}", packetType);
             }
         } catch (FieldAccessException fieldAccessEx) {
-            plugin.getLog().error("Failed to parse packet {}", packetEvent.getPacketType(), fieldAccessEx);
+            plugin.getLog().error("解析数据包 {} 失败", packetEvent.getPacketType(), fieldAccessEx);
         }
     }
 
     private @NotNull PacketType getOverriddenType(PacketType packetType) {
         if (packetType.isDynamic()) {
             String vanillaName = packetType.getPacketClass().getName();
-            plugin.getLog().info("Overriding packet type for unregistered packet type to fix ProtocolLib bug");
+            plugin.getLog().info("为未注册的数据包类型重写数据包类型以修复 ProtocolLib 漏洞");
             if (vanillaName.endsWith("ServerboundHelloPacket")) {
                 return START;
             }

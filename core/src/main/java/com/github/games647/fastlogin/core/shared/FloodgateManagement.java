@@ -69,7 +69,7 @@ public abstract class FloodgateManagement<P extends C, C, L extends LoginSession
 
     @Override
     public void run() {
-        core.getPlugin().getLog().info("Player {} is connecting through Geyser Floodgate.", username);
+        core.getPlugin().getLog().info("玩家 {} 正在通过 Geyser Floodgate 进行连接。", username);
 
         // check if the Bedrock player is linked to a Java account
         isLinked = floodgatePlayer.getLinkedPlayer() != null;
@@ -143,7 +143,7 @@ public abstract class FloodgateManagement<P extends C, C, L extends LoginSession
                 premiumUUID = core.getResolver().findProfile(username);
             } catch (IOException | RateLimitException e) {
                 core.getPlugin().getLog().error(
-                        "Could not check whether Floodgate Player {}'s name conflicts a premium Java account's name.",
+                        "无法检查 Floodgate 玩家 {} 的名字是否与正版 Java 账户的名字冲突。",
                         username, e);
                 return;
             }

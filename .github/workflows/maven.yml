@@ -1,67 +1,50 @@
-# Automatically build, run unit and integration tests to detect errors early (CI provided by GitHub)
-# including making pull requests review easier
+name: Build and Release
 
-# Human-readable name in the actions tab
-name: Maven Build
-
-# Build on every pull request regardless of the branch
-# Wiki: https://help.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  # job id
-  build_and_test:
-
-    # Environment image - always use the newest OS
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      # With at least one permission given, all default to read
-      contents: read
 
-    # Run steps
     steps:
-      # Pull changes
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'  # 根据 bungee 模块要求使用 Java 17
+        distribution: 'temurin'
+        cache: maven
+    
+    - name: Build with Maven
+      run: mvn --batch-mode --update-snapshots package
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Package
+        path: |
+          */target/*.jar
+          !*/target/original-*.jar
+          !*/target/*-shaded.jar
 
-      # Setup Java
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version-file: '.java-version'
-          cache: 'maven'
-
-      # Build and test (included in package)
-      - name: Build with Maven and test
-        # Run non-interactive, package (with compile+test),
-        # ignore snapshot updates, because they are likely to have breaking changes, enforce checksums
-        run: mvn test --batch-mode --threads 2.0C --no-snapshot-updates --strict-checksums --file pom.xml
-
-  dependency:
-    runs-on: ubuntu-latest
-    permissions:
-      # Write only necessary for dependency submission all others then default to read
-      contents: write
-
-    # Run steps
-    steps:
-      # Pull changes
-      - uses: actions/checkout@v4
-
-      # Setup Java
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version-file: '.java-version'
-          cache: 'maven'
-
-      - name: Submit Dependency Snapshot
-        if: ${{ github.event_name == 'push' }}
-        uses: advanced-security/maven-dependency-submission-action@v4.0.3
+    # 如果您想创建一个 Release
+    - name: Create Release
+      if: github.event_name != 'pull_request'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          */target/*.jar
+          !*/target/original-*.jar
+          !*/target/*-shaded.jar
+        name: Release ${{ github.sha }}
+        draft: false
+        prerelease: false
+        tag_name: 1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
