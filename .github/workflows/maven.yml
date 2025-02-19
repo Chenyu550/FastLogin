@@ -33,7 +33,8 @@ jobs:
           !*/target/original-*.jar
           !*/target/*-shaded.jar
     - name: 创建 SHORT_SHA
-      run: echo "github.sha=`echo ${{ github.sha }} | cut -c1-8`" >> $GITHUB_ENV
+      id: short-sha
+      run: echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-8`" >> $GITHUB_ENV
     - name: Create Release
       if: github.event_name != 'pull_request'
       uses: softprops/action-gh-release@v1
@@ -42,9 +43,9 @@ jobs:
           */target/*.jar
           !*/target/original-*.jar
           !*/target/*-shaded.jar
-        name: AutoRelease ${{ github.sha }}
+        name: AutoRelease ${{ steps.short-sha.outputs.SHORT_SHA }}
         draft: false
         prerelease: false
-        tag_name: ${{ github.sha }}
+        tag_name: ${{ steps.short-sha.outputs.SHORT_SHA }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
