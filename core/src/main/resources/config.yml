@@ -1,287 +1,274 @@
-# FastLogin config
-# Project site: https://www.spigotmc.org/resources/fastlogin.14153
-# Source code: https://github.com/games647/FastLogin
+# FastLogin 配置
+# 项目地址: https://www.spigotmc.org/resources/fastlogin.14153
+# 源代码: https://github.com/games647/FastLogin
 #
-# You can access the newest config here:
+# 最新配置可在此处获取:
 # https://github.com/games647/FastLogin/blob/main/core/src/main/resources/config.yml
 
-# This a **very** simple anti bot protection. Recommendation is to use a dedicated program to approach this
-# problem. Low level firewalls like uwf (or iptables direct) are more efficient than a Minecraft plugin. TCP reverse
-# proxies could also be used and offload some work even to different host.
+# 这是一个**非常**简单的反机器人保护。建议使用专用程序解决此
+# 问题。低级防火墙如uwf（或直接iptables）比Minecraft插件更高效。TCP反向
+# 代理也可用于分流工作至不同主机。
 #
-# The settings will limit how many connections this plugin will handle. After hitting this limit. FastLogin will
-# completely ignore incoming connections. Effectively there will be no database requests and network requests.
-# Therefore, auto logins won't be possible.
+# 这些设置将限制此插件处理的连接数。达到此限制后，FastLogin将
+# 完全忽略传入连接。实际上不会有数据库请求和网络请求。
+# 因此，自动登录将不可用。
 anti-bot:
   enabled: true
-  # Image the following like bucket. The following is total amount that is allowed in this bucket, while expire
-  # means how long it takes for every entry to expire.
-  # Total number of connections
+  # 将以下视为一个桶。connections是桶中允许的总量，而expire
+  # 表示每个条目过期所需的时间。
+  # 总连接数
   connections: 600
-  # Amount of minutes after the first connection got inserted will expire and made available
+  # 首次插入连接后过期并释放的分钟数
   expire: 10
-  # Action - Which action should be performed when the bucket is full (too many connections)
-  # Allowed values are: 'ignore' (FastLogin drops handling the player) or 'block' (block this incoming connection)
+  # 动作 - 当桶已满（连接过多）时应执行的操作
+  # 允许值: 'ignore'（FastLogin放弃处理玩家）或 'block'（阻止此传入连接）
   action: 'ignore'
 
-# Request a premium login without forcing the player to type a command
+# 请求正版登录而无需玩家输入命令
 #
-# If you activate autoRegister, this plugin will check/do these points on login:
-# 1. An existing cracked account shouldn't exist
-# -> paid accounts cannot steal the existing account of cracked players
-# - (Already registered players could still use the /premium command to activate premium checks)
-# 2. Automatically registers an account with a strong random generated password
-# -> cracked player cannot register an account for the premium player and so cannot the steal the account
+# 如果启用autoRegister，插件将在登录时检查/执行以下步骤:
+# 1. 不应存在已注册的离线账户
+# -> 正版账户无法盗取已存在的离线玩家账户
+# -（已注册玩家仍可使用 /premium 命令激活正版检查）
+# 2. 自动用强随机密码注册账户
+# -> 离线玩家无法为正版玩家注册账户，从而无法盗取账户
 #
-# Furthermore the premium player check have to be made based on the player name
-# This means if a cracked player connects to the server, we request a paid account login from this player
-# the player just disconnect and sees the message: 'bad login' or 'invalid session'
-# There is no way to change this message
-# For more information: https://github.com/games647/FastLogin#why-do-players-have-to-invoke-a-command
+# 此外，正版玩家检查需基于玩家名称
+# 这意味着如果离线玩家连接服务器，我们会要求该玩家进行正版账户登录
+# 玩家会断开连接并看到消息: 'bad login' 或 'invalid session'
+# 无法修改此消息
+# 更多信息: https://github.com/games647/FastLogin#why-do-players-have-to-invoke-a-command
 autoRegister: false
 
-# Should FastLogin respect per IP limit of registrations (e.g. in AuthMe)
-# Because most auth plugins do their stuff async - FastLogin will still think the player was registered
-# To work best - you also need to enable auto-register-unknown
+# FastLogin是否应遵循每个IP的注册限制（例如AuthMe中的设置）
+# 由于大多数验证插件异步处理 - FastLogin仍会认为玩家已注册
+# 为最佳效果 - 你还需要启用 auto-register-unknown
 #
-# If set to true - FastLogin will always attempt to register the player, even if the limit is exceeded
-# It is up to the auth plugin to handle the excessive registration
+# 若设为true - FastLogin将始终尝试注册玩家，即使超出限制
+# 具体由验证插件处理超额注册
 # https://github.com/games647/FastLogin/issues/458
 respectIpLimit: false
 
-# This is extra configuration option to the feature above. If we request a premium authentication from a player who
-# isn't actual premium but used a premium username, the player will disconnect with the reason "invalid session" or
-# "bad login".
+# 这是上述功能的额外配置选项。如果我们要求一个非正版但使用了正版用户名的玩家进行正版认证，
+# 该玩家会因"invalid session"或"bad login"断开连接。
 #
-# If you activate this, we are remembering this player and do not force another premium authentication if the player
-# tries to join again, so the player could join as cracked player.
+# 如果启用此选项，我们会记住该玩家，并在其再次尝试加入时不强制要求正版认证，
+# 允许玩家以离线身份加入。
 secondAttemptCracked: false
 
-# New cracked players will be kicked from server. Good if you want switch from offline-mode to online-mode without
-# losing players!
+# 新离线玩家将被踢出服务器。适用于想从离线模式切换至在线模式且
+# 不愿丢失已有玩家的情况!
 #
-# Existing cracked and premium players could still join your server. Moreover, you could add player names to an
-# allow-list.
-# So that these cracked players could join too, although they are new players.
+# 已有离线和正版玩家仍可加入。此外，你可以将玩家名加入白名单，
+# 即使他们是新玩家，也允许这些离线玩家加入。
 switchMode: false
 
-# If this plugin detected that a player has a premium, it can also set the associated
-# uuid from that account. So if the player changes the username, they will still have
-# the same player data (inventory, permissions, ...)
+# 当插件检测到玩家拥有正版账户时，可设置关联的
+# 正版UUID。因此当玩家更改用户名时，仍保留
+# 相同玩家数据（背包、权限等）
 #
-# Warning: This also means that the UUID will be different if the player is connecting
-# through an offline mode connection. This **could** cause plugin compatibility issues.
+# 警告: 这也意味着玩家通过离线模式连接时UUID会不同。
+# 这**可能**导致插件兼容性问题。
 #
-# This is an example and doesn't apply for every plugin.
-# Example: If you want to ban players who aren't online at the moment, the ban plugin will look
-# after an offline uuid associated to the player, because the server is in offline mode. Then the premium
-# players could still join the server, because they have different UUID.
+# 以下为示例，并非所有插件都适用:
+# 例如: 若你想封禁不在线的玩家，封禁插件会查找
+# 与玩家关联的离线UUID（因为服务器处于离线模式）。此时正版
+# 玩家仍可加入服务器，因其拥有不同UUID。
 #
-# Moreover, you may want to convert the offline UUID to a premium UUID. This will ensure that the player
-# will have the same inventory, permissions, ... if they switched to premium authentication from offline/cracked
-# authentication.
+# 此外，你可能希望将离线UUID转换为正版UUID。这将确保玩家
+# 从离线/离线认证切换至正版认证后保留相同背包、权限等。
 #
-# This feature requires Cauldron, Spigot or a fork of Spigot (Paper)
+# 此功能需要Cauldron、Spigot或其分支（如Paper）
 premiumUuid: false
 
-# This will make an additional check (only for player names which are not in the database) against the mojang servers
-# in order to get the premium UUID. If that premium UUID is in the database, we can assume on successful login that the
-# player changed its username and then update the name in the database.
-# Examples:
-# #### Case 1
+# 将对数据库中不存在的玩家名向Mojang服务器发起额外检查
+# 以获取正版UUID。如果该正版UUID存在于数据库，我们可在成功登录时
+# 假设玩家更改了用户名并更新数据库中的名称。
+# 示例:
+# #### 情况1
 # autoRegister = false
 # nameChangeCheck = false
 #
-# GameProfile logins as cracked until the player invoked the command /premium. Then we could override the existing
-# database record.
+# 玩家以离线身份登录，直到执行 /premium 命令。然后可覆盖现有数据库记录。
 #
-# #### Case 2
+# #### 情况2
 # autoRegister = false
 # nameChangeCheck = true
 #
-# Connect the Mojang API and check what UUID the player has (UUID exists => Paid Minecraft account). If that UUID is in
-# the database it's an **existing player** and FastLogin can **assume** the player is premium and changed the username.
-# If it's not in the database, it's a new player and **could be a cracked player**. So we just use an offline mode
-# authentication for this player.
+# 连接Mojang API检查玩家的UUID（存在UUID => 正版账户）。如果数据库中存在该UUID，
+# 则为**现有玩家**，FastLogin可**假定**其为正版且更改了用户名。
+# 若不存在，则为新玩家且**可能是离线**。因此仅使用离线认证。
 #
-# **Limitation**: Cracked players who use the new username of a paid account cannot join the server if the database
-# contains the old name. (Example: The owner of the paid account no longer plays on the server, but changed the username
-# in the meanwhile).
+# **限制**: 使用正版账户新用户名的离线玩家无法加入，若数据库包含旧名称。
+# （例如: 正版账户所有者已不再在服务器游玩，但期间更改了用户名）
 #
-# #### Case 3
+# #### 情况3
 # autoRegister = true
 # nameChangeCheck = false
 #
-# We will always request a premium authentication if the username is unknown to us, but is in use by a paid Minecraft
-# account. This means it's kind of a more aggressive check like nameChangeCheck = true and autoRegister = false, because
-# it requests a premium authentication which are completely new to us, that even the premium UUID is not in our database.
+# 若用户名未知但被正版账户使用，始终要求正版认证。
+# 这比nameChangeCheck = true 且 autoRegister = false更激进，
+# 因会要求未知正版UUID的玩家进行正版认证。
 #
-# **Limitation**: see below
+# **限制**: 见下文
 #
-# #### Case 4
+# #### 情况4
 # autoRegister = true
 # nameChangeCheck = true
 #
-# Based on autoRegister it checks if the player name is premium and login using a premium authentication. After that
-# fastlogin receives the premium UUID and can update the database record.
+# 基于autoRegister检查玩家名是否正版并使用正版认证登录。之后
+# FastLogin接收正版UUID并更新数据库记录。
 #
-# **Limitation from autoRegister**: New offline players who use the username of an existing Minecraft cannot join the
-# server.
+# **autoRegister的限制**: 使用已存在正版账户用户名的离线新玩家无法加入。
 nameChangeCheck: false
 
-# If your players have a premium account and a skin associated to their account, this plugin
-# can download the data and set it to the online player.
+# 如果正版玩家账户关联了皮肤，本插件
+# 可下载数据并设置给在线玩家。
 #
-# Keep in mind that this will only work if the player:
-# * is the owner of the premium account
-# * the server connection is established through a premium connection (paid account authentication)
-# * has a skin
+# 注意仅当玩家满足以下条件时生效:
+# * 是正版账户所有者
+# * 通过正版连接认证
+# * 拥有皮肤
 #
-# This means this plugin doesn't need to create a new connection to the Mojang servers, because
-# the skin data is included in the Auth-Verification-Response sent by Mojang. If you want to use for other
-# players like cracked player, you have to use other plugins.
+# 这意味着插件无需新建Mojang服务器连接，
+# 因为皮肤数据包含在Mojang的认证响应中。若想为离线玩家
+# 设置皮肤，需使用其他插件。
 #
-# If you use PaperSpigot - FastLogin will always try to set the skin, even if forwardSkin is set to false
-# It is needed to allow premium name change to work correctly
+# 如果使用PaperSpigot - 即使forwardSkin设为false，FastLogin也会尝试设置皮肤
+# 这是确保正版用户名更改正常工作的必要条件
 # https://github.com/games647/FastLogin/issues/457
 #
-# If you want to use skins for your cracked player, you need an additional plugin like
-# ChangeSkin, SkinRestorer, ...
+# 若需为离线玩家使用皮肤，需额外插件如
+# ChangeSkin、SkinRestorer等
 forwardSkin: true
 
-# Displays a warning message that this message SHOULD only be invoked by
-# users who actually are the owner of this account. So not by cracked players
+# 显示警告信息，提示此命令**仅应**由
+# 实际账户所有者执行。而非离线玩家
 #
-# If they still want to invoke the command, they have to invoke /premium again
+# 若仍要执行命令，需再次输入 /premium
 premium-warning: true
 
-# ======[[ Spigot+ProtocolLib users only ]]======
-# When set to true, enables the use of alternative session resolver which does not send the server IP
-# to mojang session servers. This setting might be useful when you are trying to run the server via a
-# transparent reverse proxy or some other form of DNAT. As far as security goes, this setting has
-# negligible to no security impact.
+# ======[[ 仅限Spigot+ProtocolLib用户 ]]======
+# 设为true时，启用不发送服务器IP至Mojang会话服务器的
+# 替代会话解析器。此设置适用于通过透明反向代理
+# 或某种形式DNAT运行服务器的情况。就安全性而言，
+# 此设置影响可忽略不计。
 #
-# This setting works on a similar principle as 'prevent-proxy' setting in server.properties.
-# When set to false, the server behaves like prevent-proxy was set to true and vice-versa.
-# Normally, when you use the prevent-proxy=true, you would want this disabled.
+# 此设置原理类似server.properties中的'prevent-proxy'设置。
+# 设为false时，服务器行为类似prevent-proxy=true，反之亦然。
+# 通常，若prevent-proxy=true，你希望禁用此设置。
 #
-# Please note that this setting has no effect when used outside of Spigot+ProtocolLib context.
+# 注意在非Spigot+ProtocolLib环境下此设置无效。
 #
-# !!! [WARNING] !!!
-# This option is considered highly experimental. While it is highly unlikely this will break your server,
-# more tests need to be conducted in order to verify its effectiveness. Brief tests seemed promising, but
-# every environment is different, and so it might not work for you as it did for me.
+# !!! [警告] !!!
+# 此选项为高度实验性。虽不太可能破坏服务器，
+# 但需更多测试验证有效性。初步测试表现良好，
+# 但不同环境可能有差异。
 useProxyAgnosticResolver: true
 
-# If you have autoRegister or nameChangeCheck enabled, you could be rate-limited by Mojang.
-# The requests of the both options will be only made by FastLogin if the username is unknown to the server
-# You are allowed to make 600 requests per 10-minutes (60 per minute)
-# If you own a big server this value could be too low
-# Once the limit is reached, new players are always logged in as cracked until the rate-limit is expired.
-# (to the next ten minutes)
+# 若启用autoRegister或nameChangeCheck，可能被Mojang限速。
+# 仅当用户名未知时FastLogin会发起请求。
+# 允许每10分钟600次请求（每分钟60次）
+# 大型服务器可能超出此限
+# 达到限制后，新玩家始终以离线登录直至限速过期。
+#（至下一个十分钟周期）
 #
-# The limit is IP-wide. If you have multiple IPv4-addresses you specify them here. FastLogin will then use it in
-# rotating order --> 5 different IP-addresses 5 * 600 per 10 minutes
-# If this list is empty only the default one will be used
+# 限制基于IP。若有多IPv4地址可在此指定。
+# FastLogin将轮换使用 --> 5个不同IP即5*600/10分钟
+# 若列表为空则仅使用默认IP
 #
-# Lists are created like this:
+# 列表格式:
 #ip-addresses:
 #    - 192-168-0-2
 ip-addresses: []
 
-# How many requests should be established to the Mojang API for Name -> UUID requests. Some other plugins as well
-# as the head Minecraft block make such requests as well. Using this option you can limit the amount requests this
-# plugin should make.
+# 限制向Mojang API发起的用户名→UUID请求数。其他插件
+# 及Minecraft本身也会发起此类请求。此选项可限制本插件的请求量。
 #
-# If you lower this value, other plugins could still make requests while FastLogin cannot.
-# Mojang limits the amount of request to 600 per 10 minutes per IPv4-address.
+# 降低此值时，其他插件仍可发起请求而FastLogin受限。
+# Mojang限制每IPv4每10分钟600次请求。
 mojang-request-limit: 600
 
-# This option automatically registers players which are in the FastLogin database, but not in the auth plugin database.
-# This can happen if you switch your auth plugin or cleared the database of the auth plugin.
+# 此选项自动注册存在于FastLogin数据库但未在验证插件数据库中的玩家。
+# 可能发生于切换验证插件或清空验证插件数据库时。
 # https://github.com/games647/FastLogin/issues/85
 auto-register-unknown: false
 
-# By setting this option to false, you can disable the auto login from fastlogin. So a premium (like a paid account)
-# authentication is requested, but the player won't be auto logged into the account from the auth plugin.
+# 设为false可禁用FastLogin的自动登录。即使请求了正版认证，
+# 玩家也不会被验证插件自动登录。
 #
-# This can be used as 2Factor authentication for better security of your accounts. A hacker then needs both passwords.
-# The password of your Minecraft and the password to login in with your auth plugin
+# 可用于双因素认证提升安全性。黑客需同时知道
+# Minecraft密码和验证插件密码。
 autoLogin: true
 
-# Floodgate configuration
-# Connecting through Floodgate requires player's to sign in via their Xbox Live account
-# !!!!!!!! WARNING: FLOODGATE SUPPORT IS AN EXPERIMENTAL FEATURE !!!!!!!!
-# Enabling any of these settings might lead to people gaining unauthorized access to other's accounts!
+# Floodgate配置
+# 通过Floodgate连接需使用Xbox Live账户登录
+# !!!!!!!! 警告: FLOODGATE支持为实验性功能 !!!!!!!!
+# 启用可能导致未授权账户访问！
 
-# Automatically log in players connecting through Floodgate.
-# Possible values:
-#   false: Disables auto login for every player connecting through Floodgate
-#   true: Enables auto login for every player connecting through Floodgate
-#   linked: Only Bedrock accounts that are linked to a Java account will be logged in automatically
-#   no-conflict: Bedrock players will only be automatically logged in if the Mojang API reports
-#     that there is no existing Premium Java MC account with their name.
-#     This option can be useful if you are not using 'username-prefix' in floodgate/config.yml
-# Requires 'autoLogin' to be 'true'
-# !!!!!!!! WARNING: FLOODGATE SUPPORT IS AN EXPERIMENTAL FEATURE !!!!!!!!
-# Enabling this might lead to people gaining unauthorized access to other's accounts!
+# 自动登录通过Floodgate连接的玩家。
+# 可选值:
+#   false: 禁用所有Floodgate玩家的自动登录
+#   true: 启用所有Floodgate玩家的自动登录
+#   linked: 仅自动登录已关联Java账户的Bedrock账户
+#   no-conflict: 仅当Mojang API报告无同名正版Java账户时自动登录Bedrock玩家
+#     此选项适用于未在floodgate/config.yml中使用'username-prefix'的情况
+# 需 'autoLogin' 设为 'true'
+# !!!!!!!! 警告: FLOODGATE支持为实验性功能 !!!!!!!!
+# 启用可能导致未授权账户访问！
 autoLoginFloodgate: false
 
-# This enables Floodgate or Offline Geyser players to join the server, even if they are using the name of an
-# existing Java **PREMIUM** account (so someone has bought Minecraft with that username)
+# 允许Floodgate或离线Geyser玩家使用已有正版Java账户名加入服务器
 #
-# Java and Bedrock players will get different UUIDs, so their inventories, location, etc. will be different.
-# However, some plugins (such as AuthMe) rely on names instead of UUIDs to identify a player which might cause issues.
-# In the case of AuthMe (and other auth plugins), both the Java and the Bedrock player will have the same password.
+# Java和Bedrock玩家将获得不同UUID，因此背包、位置等数据独立。
+# 但某些插件（如AuthMe）依赖用户名而非UUID识别玩家，可能导致问题。
+# 对于AuthMe等验证插件，Java和Bedrock玩家将共享相同密码。
 #
-# To prevent conflicts from two different players having the same name, it is highly recommended using a
-#    'username-prefix' in floodgate/config.yml
+# 为防止用户名冲突，强烈建议在floodgate/config.yml中使用
+#    'username-prefix'
 #
-# Possible values:
-#   false: Kick Bedrock players, if they are using an existing Premium Java account's name
-#     Note: Linked Floodgate players have the same name as their Java profile, so the Bedrock player will always conflict
-#     their own Java account's name. Therefore, setting this to false will prevent any linked player from joining.
-#   true: Bypass name conflict checking.
-#   linked: Floodgate accounts linked to a Java account will be allowed to join with conflicting names
-#     For Offline Geyser players, 'linked' works as 'false'
-# !!!!!!!! WARNING: FLOODGATE/GEYSER SUPPORT IS AN EXPERIMENTAL FEATURE !!!!!!!!
-# Enabling this might lead to people gaining unauthorized access to other's accounts!
+# 可选值:
+#   false: 若Bedrock玩家使用已有正版Java账户名，踢出
+#     注意: 关联的Floodgate玩家与其Java账户同名，因此设为false将阻止所有关联玩家加入
+#   true: 绕过名称冲突检查
+#   linked: 允许已关联Java账户的Floodgate账户使用冲突名称
+#     对于离线Geyser玩家，'linked'等同于'false'
+# !!!!!!!! 警告: FLOODGATE/GEYSER支持为实验性功能 !!!!!!!!
+# 启用可能导致未授权账户访问！
 allowFloodgateNameConflict: false
 
-# Automatically register players connecting through Floodgate.
-# autoLoginFloodgate must be available for the player to use this
-# Possible values:
-#   false: Disables auto registering for every player connecting through Floodgate
-#   true: Enables auto registering for every player connecting through Floodgate
-#   linked: Only Bedrock accounts that are linked to a Java account will be registered automatically
-#   no-conflict: Bedrock players will only be automatically registered if the Mojang API reports
-#     that there is no existing Premium Java MC account with their name.
-#     This option can be useful if you are not using 'username-prefix' in floodgate/config.yml
-# Requires 'autoRegister' to be 'true'
-# !!!!!!!! WARNING: FLOODGATE SUPPORT IS AN EXPERIMENTAL FEATURE !!!!!!!!
-# Enabling this might lead to people gaining unauthorized access to other's accounts!
+# 自动注册通过Floodgate连接的玩家。
+# autoLoginFloodgate需对该玩家可用
+# 可选值:
+#   false: 禁用所有Floodgate玩家的自动注册
+#   true: 启用所有Floodgate玩家的自动注册
+#   linked: 仅自动注册已关联Java账户的Bedrock账户
+#   no-conflict: 仅当Mojang API报告无同名正版Java账户时自动注册Bedrock玩家
+#     此选项适用于未在floodgate/config.yml中使用'username-prefix'的情况
+# 需 'autoRegister' 设为 'true'
+# !!!!!!!! 警告: FLOODGATE支持为实验性功能 !!!!!!!!
+# 启用可能导致未授权账户访问！
 autoRegisterFloodgate: false
 
-# This option resembles the vanilla configuration option 'enforce-secure-profile' in the 'server.properties' file.
-# It verifies if the incoming cryptographic key in the login request from the player is signed by Mojang. This key
-# is necessary for servers where you or other in-game players want to verify that a chat message sent and signed by
-# this player is not modified by any third-party. Modifications by your server would also invalidate the message.
+# 此选项对应server.properties中的'enforce-secure-profile'配置。
+# 验证玩家登录请求中的加密密钥是否由Mojang签名。该密钥
+# 对需要验证玩家聊天消息未经第三方篡改的服务器至关重要。
 #
-# This feature is only relevant if you use the plugin in ProtocolLib mode and use 1.19+.
-# This also the case if you don't have any proxies in use.
+# 仅在使用ProtocolLib模式且版本为1.19+时相关。
+# 无代理时同样适用。
 verifyClientKeys: false
 
-# Database configuration
-# Recommended is the use of MariaDB (a better version of MySQL)
+# 数据库配置
+# 推荐使用MariaDB（MySQL优化版）
 
-# Single file SQLite database
+# 单文件SQLite数据库
 driver: 'sqlite'
-# File location
+# 文件路径
 database: '{pluginDir}/FastLogin.db'
 
 # MySQL/MariaDB
-# If you want to enable it, uncomment only the lines below; this not this line.
-# If on velocity use 'mariadb' as the driver
+# 启用需取消注释以下行（不包括此行）
+# Velocity服务端请使用'mariadb'作为驱动
 #driver: 'mysql'
 #host: '127.0.0.1'
 #port: 3306
@@ -289,29 +276,27 @@ database: '{pluginDir}/FastLogin.db'
 #username: 'myUser'
 #password: 'myPassword'
 
-# Advanced Connection Pool settings in seconds
+# 高级连接池设置（秒）
 #timeout: 30
 #lifetime: 30
 
-## It's recommended to enable SSL if the MySQL server isn't running on the same host
-## This will encrypt the connection for secure transportation of the sql server password
+## 若MySQL不在同一主机运行，建议启用SSL
+## 加密连接以安全传输数据库密码
 #useSSL: false
-## Verification requirements for the server cert,
-## Values: Required (unchecked SSL connection), VerifyCA (verify CA), VerifyFull (verify CA and matching hostname)
+## 服务器证书验证要求
+## 可选值: Required（不验证SSL）、VerifyCA（验证CA）、VerifyFull（验证CA及主机名）
 #sslMode=Required
-## TLS is preferred for this technique, then your host stored certificate store will be used to verify the server cert
-## Similar to HTTPS. If that's not possible RSA can be used with the following options.
-## This allows to request the public RSA key from the server to encrypt the data to it. True would allow machine-in-the-
-## middle attacks.
+## 优先使用TLS，此时使用系统证书存储验证服务器证书
+## 类似HTTPS。若不可行，可使用RSA及以下选项：
+## 允许从服务器请求RSA公钥加密数据。设为true可能允许中间人攻击。
 #allowPublicKeyRetrieval=false
-## Path to the RSA public key if key retrieval is forbidden
+## RSA公钥路径（若禁止密钥检索）
 #ServerRSAPublicKeyFile=
 
-# HTTP proxies for connecting to the Mojang servers in order to check if the username of a player is premium.
-# This is a workaround to prevent rate-limiting by Mojang. These proxies will only be used once your server hit
-# the rate-limit or the custom value above.
-# Please make sure you use reliable proxies.
+# 用于连接Mojang服务器检查玩家名是否为正版的HTTP代理。
+# 此为解决Mojang限速的替代方案。仅当服务器触发限速时使用这些代理。
+# 请确保使用可靠代理。
 proxies:
-  # 'IP:Port' or 'Domain:Port'
+  # 格式: 'IP:端口' 或 '域名:端口'
   # - 'xyz.com:1337'
   # - 'test.com:5131'
