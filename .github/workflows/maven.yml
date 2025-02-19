@@ -34,7 +34,7 @@ jobs:
           !*/target/*-shaded.jar
     - name: 创建 SHORT_SHA
       id: short-sha
-      run: echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-8`" >> $GITHUB_ENV
+      run: echo "short_sha=${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
     - name: Create Release
       if: github.event_name != 'pull_request'
       uses: softprops/action-gh-release@v1
