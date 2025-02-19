@@ -32,8 +32,8 @@ jobs:
           */target/*.jar
           !*/target/original-*.jar
           !*/target/*-shaded.jar
-
-    # 如果您想创建一个 Release
+    - name: 创建 SHORT_SHA
+      run: echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-8`" >> $GITHUB_ENV
     - name: Create Release
       if: github.event_name != 'pull_request'
       uses: softprops/action-gh-release@v1
@@ -42,9 +42,9 @@ jobs:
           */target/*.jar
           !*/target/original-*.jar
           !*/target/*-shaded.jar
-        name: Release ${{ github.sha }}
+        name: AutoRelease ${{ SHORT_SHA }}
         draft: false
         prerelease: false
-        tag_name: 1
+        tag_name: ${{ SHORT_SHA }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

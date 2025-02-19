@@ -92,7 +92,7 @@ public class NameCheckTask extends JoinManagement<Player, CommandSender, Protoco
         try {
             source.enableOnlinemode();
         } catch (Exception ex) {
-            plugin.getLog().error("Cannot send encryption packet. Falling back to cracked login for: {}", profile, ex);
+            plugin.getLog().error("无法发送加密数据包。回退为离线登录：{}", profile, ex);
             return;
         }
 

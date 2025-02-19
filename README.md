@@ -1,79 +1,72 @@
 # FastLogin
 
-Checks if a Minecraft player has a paid account (premium). If so, they can skip offline authentication (auth plugins).
-So they don't need to enter passwords. This is also called auto login (auto-login).
+检查玩家是否拥有正版Minecraft账户（Premium）。如果是，则可以跳过离线认证（登录插件）。因此他们无需输入密码。这也称为自动登录（auto-login）。
 
-## Features
+## 功能
 
-* Detect paid accounts from others
-* Automatically login paid accounts (premium)
-* Support various of auth plugins
-* Premium UUID support
-* Forward skins
-* Detect username changed and will update the existing database record
-* BungeeCord/Velocity support
-* Auto register new premium players
-* No client modifications needed
-* Good performance by using async operations
-* Locale messages
-* Support for Bedrock players proxies through FloodGate
+* 识别正版账户
+* 自动登录正版账户（Premium）
+* 支持多种验证插件
+* 正版 UUID 支持
+* 同步皮肤
+* 检测用户名变更并更新数据库记录
+* 支持 BungeeCord/Velocity
+* 自动注册新正版玩家
+* 无需客户端修改
+* 异步操作保证高性能
+* 多语言支持
+* 支持通过 Floodgate 接入的基岩版玩家
 
-## Issues
+## 问题反馈
 
-Please use issues for bug reports, suggestions, questions and more. Please check for existing issues. Existing issues
-can be voted up by adding up vote to the original post. Closing issues means that they are marked as resolved. Comments
-are still allowed and it could be re-opened.
+请使用issue提交错误报告、建议、疑问等。提交前请检查是否已有相同问题。您可以通过在原帖添加👍支持已有issue。关闭issue仅表示标记为已解决，仍可评论并重新开启。
 
-## Development builds
+## 开发版本
 
-Development builds contain the latest changes from the Source-Code. They are bleeding edge and could introduce new bugs,
-but also include features, enhancements and bug fixes that are not yet in a released version. If you click on the left
-side on `Changes`, you can see iterative change sets leading to a specific build.
+开发版本包含最新的源代码变更，属于前沿版本，可能存在新bug，但也包含未发布版本的新功能、优化和修复。点击左侧的`Changes`可查看具体构建的变更日志。
 
-You can download them from here: https://ci.codemc.org/job/Games647/job/FastLogin/
+下载地址：https://github.com/Chenyu550/FastLogin/releases
 
 ***
 
-## Commands
+## 命令
 
-    /premium [player] Label the invoker or the argument as paid account
-    /cracked [player] Label the invoker or the argument as cracked account
+    /premium [玩家] 将自己或指定玩家标记为正版账户
+    /cracked [玩家] 将自己或指定玩家标记为离线账户
 
-## Permissions
+## 权限
 
-    fastlogin.bukkit.command.premium
-    fastlogin.bukkit.command.cracked
+    fastlogin.bukkit.command.premium （标记自己或指定玩家为正版账户）
+    fastlogin.bukkit.command.cracked （标记自己或指定玩家为离线账户）
 
-    fastlogin.command.premium.other
-    fastlogin.command.cracked.other
+    fastlogin.command.premium.other （标记其他玩家为正版账户）
+    fastlogin.command.cracked.other （标记其他玩家为离线账户）
 
-## Placeholder
+## 占位符
 
-This plugin supports `PlaceholderAPI` on `Spigot`. It exports the following variable
-`%fastlogin_status%`. In BungeeCord environments, the status of a player will be delivered with a delay after the player
-already successful joined the server. This takes about a couple of milliseconds. In this case the value
-will be `Unknown`.
+本插件支持Spigot的`PlaceholderAPI`，提供以下变量：
+`%fastlogin_status%`。在BungeeCord环境下，玩家状态会在成功加入服务器后延迟约数毫秒更新，此时变量值为`Unknown`。
 
-Possible values: `Premium`, `Cracked`, `Unknown`
+可能值：`Premium`（正版），`Cracked`（离线），`Unknown`（未知）
 
-## Requirements
+## 要求
 
-* Java: 21+ recommended for improved multi-threading code by FastLogin
-  * Spigot: 8+
-  * BungeeCord and Velocity: 17+
-* Server software in offlinemode:
-  * Spigot (or a fork e.g. Paper) 1.8.8+
-    * Protocol plugin:
-      * [ProtocolLib 5.3+ with development build above 720](https://www.spigotmc.org/resources/protocollib.1997/) or
+* Java：推荐21+（FastLogin优化了多线程代码）
+  * Spigot：8+
+  * BungeeCord和Velocity：17+
+* 服务器需开启离线模式：
+  * Spigot（或分支如Paper）1.8.8+
+    * 需协议插件：
+      * [ProtocolLib 5.3+（开发版需高于720）](https://www.spigotmc.org/resources/protocollib.1997/) 或
       * [ProtocolSupport](https://www.spigotmc.org/resources/protocolsupport.7201/)
-  * Latest BungeeCord (or a fork e.g. Waterfall) or Velocity proxy
-* An auth plugin.
+  * 最新版BungeeCord（或分支如Waterfall）或Velocity代理
+* 需安装验证插件
 
-### Supported auth plugins
+### 支持的验证插件
 
 #### Spigot/Paper
 
-* [AdvancedLogin (Paid)](https://www.spigotmc.org/resources/advancedlogin.10510/)
+* [AdvancedLogin (付费)](https://www.spigotmc.org/resources/advancedlogin.10510/)
 * [AuthMe (5.X)](https://dev.bukkit.org/bukkit-plugins/authme-reloaded/)
 * [CrazyLogin](https://dev.bukkit.org/bukkit-plugins/crazylogin/)
 * [LoginSecurity](https://dev.bukkit.org/bukkit-plugins/loginsecurity/)
@@ -86,42 +79,41 @@ Possible values: `Premium`, `Cracked`, `Unknown`
 
 * [BungeeAuth](https://www.spigotmc.org/resources/bungeeauth.493/)
 
-## Network requests
+## 网络请求
 
-This plugin performs network requests to:
+本插件会请求以下地址：
 
-* https://api.mojang.com - retrieving uuid data to decide if we should activate premium login
-* https://sessionserver.mojang.com - verify if the player is the owner of that account
+* https://api.mojang.com - 获取UUID数据以判断是否启用正版登录
+* https://sessionserver.mojang.com - 验证玩家是否为账户所有者
 
 ***
 
-## How to install
+## 安装指南
 
 ### Spigot/Paper
 
-1. Download and install ProtocolLib/ProtocolSupport
-2. Download and install `FastLoginBukkit`
-3. Set your server in offline mode by setting the value `onlinemode` in your server.properties to `false`
+1. 下载安装ProtocolLib/ProtocolSupport
+2. 下载安装`FastLoginBukkit`
+3. 在server.properties中将`onlinemode`设为`false`（离线模式）
 
-### BungeeCord/Waterfall or Velocity
+### BungeeCord/Waterfall或Velocity
 
-Install the plugin on both platforms, that is proxy (BungeeCord or Velocity) and backend server (Spigot).
+插件需同时安装在代理（BungeeCord或Velocity）和后端服务器（Spigot）上。
 
-1. Activate proxy support in the server configuration
-   * This is often found in `spigot.yml` or `paper.yml`
-2. Restart the backend server
-3. Now there is `allowed-proxies.txt` file in the FastLogin folder of the restarted server
-    * BungeeCord: Put your `stats`-id from the BungeeCord config into this file
-    * Velocity: On plugin startup the plugin generates a `proxyId.txt` inside the plugins folder of the proxy
-4. Activate ip forwarding in your proxy config
-5. Check your database settings in the config of FastLogin on your proxy
-    * The proxies only ship with a limited set of drivers where Spigot supports more. Therefore, these are supported:
-    * BungeeCord: `mysql` for MySQL/MariaDB
-    * Velocity: `mariadb` for MySQL/MariaDB
-    * Note the embedded file storage SQLite is not available
-    * MySQL/MariaDB requires an external database server running. Check your server provider if there is one available
-   or install one.
-6. Set proxy and Spigot in offline mode by setting the value `onlinemode` in your `config.yml` to false
-7. You should *always* configure the firewall for your Spigot server so that it's only accessible through your proxy
-   * This is also the case without this plugin
-   * https://www.spigotmc.org/wiki/bungeecord-installation/#post-installation
+1. 在后端服务器配置中启用代理支持
+   * 通常在`spigot.yml`或`paper.yml`中设置
+2. 重启后端服务器
+3. 在FastLogin目录生成`allowed-proxies.txt`
+    * BungeeCord：将BungeeCord配置中的`stats`-id填入该文件
+    * Velocity：插件启动时会在代理插件目录生成`proxyId.txt`
+4. 在代理配置中启用IP转发
+5. 检查代理端FastLogin配置的数据库设置
+    * 代理端仅支持有限数据库驱动：
+    * BungeeCord：`mysql`（MySQL/MariaDB）
+    * Velocity：`mariadb`（MySQL/MariaDB）
+    * 注意：不支持嵌入式SQLite
+    * MySQL/MariaDB需外部数据库服务，请咨询服务器提供商或自行搭建
+6. 在代理和Spigot的配置中将`onlinemode`设为`false`
+7. *务必*通过防火墙限制Spigot服务器只能通过代理访问
+   * 即使不使用本插件也应如此配置
+   * 参考：https://www.spigotmc.org/wiki/bungeecord-installation/#post-installation

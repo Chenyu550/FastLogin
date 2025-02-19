@@ -1,43 +1,43 @@
-name: 💡 Enhancement request
-description: New feature or change request
+name: 💡 功能请求
+description: 新功能或改进提案
 labels: [ enhancement ]
 body:
   - type: markdown
     attributes:
       value: |
-        This ticket is about suggestions for a feature or particular enhancement. 
-        Feedback about this form is appreciated.
+        此问题单用于提交新功能建议或现有功能改进提案。
+        欢迎对本表单提出反馈。
   - type: textarea
     attributes:
-      label: Is your feature request related to a problem? Please describe.
-      description: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+      label: 问题背景
+      description: 请清晰描述该功能要解决的核心问题（示例：当[...]时，总是遇到困扰）
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Describe the solution you'd like
-      description: A clear and concise description of what you want to happen.
+      label: 期望的解决方案
+      description: 请清晰描述您期望的具体实现方案
   - type: textarea
     attributes:
-      label: Describe alternatives you've considered
-      description: A clear and concise description of any alternative solutions or features you've considered.
+      label: 其他备选方案
+      description: 请列出您考虑过的其他替代方案或变通方法
   - type: dropdown
     attributes:
-      label: Platform
-      description: Server software - choose your proxy software if you have multiple servers
+      label: 运行平台
+      description: 服务器软件类型（若多服务器环境，选择代理软件）
       options:
         - Spigot
         - BungeeCord
         - Velocity
-        - All / Shared
+        - 全部/通用
     validations:
       required: true
   - type: checkboxes
     attributes:
-      label: Relevance
-      description: Check list for previous tickets
+      label: 关联性检查
+      description: 前置确认清单
       options:
         - label: |
-            I checked for existing tickets -
-            If there are, please vote them with a thumbs reaction and not create new ones
+            我已检查是否存在同类提案——
+            若有，请通过👍反应投票支持，而非新建问题单
           required: true

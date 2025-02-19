@@ -94,12 +94,12 @@ public class BungeeManager {
         if (enabled) {
             proxyIds = loadBungeeCordIds();
             if (proxyIds.isEmpty()) {
-                plugin.getLog().info("No valid IDs found. Minecraft proxy support cannot work in the current state");
+                plugin.getLog().info("未找到有效 ID。Minecraft 代理支持在当前状态下无法运行");
             }
 
             registerPluginChannels();
-            plugin.getLog().info("Found enabled proxy configuration");
-            plugin.getLog().info("Remember to follow the proxy guide to complete your setup");
+            plugin.getLog().info("找到了已启用的代理配置");
+            plugin.getLog().info("请记住按照代理指南完成设置");
         } else {
             plugin.getLog().warn("正在禁用 Minecraft 代理配置。从现在开始假定为直接连接。");
         }

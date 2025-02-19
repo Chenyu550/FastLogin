@@ -1,49 +1,49 @@
-name: 🐞 Bug Report
-description: Something isn't working, broken, not expected behavior
+name: 🐞 错误报告
+description: 功能异常、损坏或不符合预期行为
 labels: [ bug ]
 body:
   - type: markdown
     attributes:
       value: |
-        This ticket is about bugs, so broken, not expected behavior. Feedback about this form is appreciated.
+        此问题单用于报告错误（功能异常、损坏或不符合预期行为）。欢迎对本表单提出反馈。
   - type: textarea
     attributes:
-      label: What happened?
-      description: What behavior is observed?
+      label: 问题现象
+      description: 观察到的具体异常现象
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Steps to reproduce
-      description: The actions that cause the issues. Please explain it in detail.
+      label: 重现步骤
+      description: 导致问题的操作步骤，请详细说明
   - type: input
     attributes:
-      label: Plugin list
-      description: This can be found by running `/pl`
+      label: 插件列表
+      description: 可通过执行`/pl`命令获取
       placeholder: AuthMe, ProtocolLib, ...
   - type: input
     attributes:
-      label: Configuration file
+      label: 配置文件
       description: |
-        Link to the contents of your config.yml file.
-        You can use [GitHub](https://gist.github.com/), [Hastebin](https://hastebin.com) or similar for that.
+        请提供config.yml文件内容链接。
+        可使用 [GitHub Gist](https://gist.github.com/)、[Hastebin](https://hastebin.com) 等平台。
       placeholder: https://gist.github.com/games647/88c4439e1cd7810f21318b1b24a04ee0
   - type: textarea
     attributes:
-      label: Server log
-      description: The error, stacktrace or link the complete log. You can use the links above for long versions.
+      label: 服务器日志
+      description: 错误堆栈或完整日志链接（长文本请使用上述平台）
       placeholder: https://www.toptal.com/developers/hastebin / https://gist.github.com/
   - type: input
     attributes:
-      label: Plugin version
-      description: Plugin version or build number. This can be found by running `/version plugin-name`
+      label: 插件版本
+      description: 插件版本号或构建号（通过`/version 插件名`获取）
       placeholder: v3.1-SNAPSHOT-570b321
     validations:
       required: true
   - type: dropdown
     attributes:
-      label: Platform
-      description: Server software - choose your proxy software if you have multiple servers
+      label: 运行平台
+      description: 服务器软件类型（若多服务器环境，选择代理软件）
       options:
         - Spigot
         - BungeeCord
@@ -52,14 +52,14 @@ body:
       required: true
   - type: checkboxes
     attributes:
-      label: Relevance
-      description: Check list for previous tickets
+      label: 关联性检查
+      description: 前置确认清单
       options:
         - label: |
-            I tried the [latest build](https://ci.codemc.io/job/Games647/job/FastLogin/) 
-            (build refers to development builds not necessary a release version; i.e. v1.10 is out of date)
+            我已尝试[最新开发构建版](https://github.com/Chenyu550/FastLogin/releases)
+            （构建版指开发版本，不一定是正式版，例如v1.10已过时）
           required: true
         - label: |
-            I checked for existing tickets -
-            If there are, please vote them with a thumbs reaction and not create new ones
+            我已检查是否存在相同问题——
+            若有，请通过👍反应投票支持，而非新建问题单
           required: true

@@ -73,13 +73,12 @@ import static com.comphenix.protocol.PacketType.Login.Server.DISCONNECT;
 public class VerifyResponseTask implements Runnable {
 
     private static final String ENCRYPTION_CLASS_NAME = "MinecraftEncryption";
-    private static final String ADDRESS_VERIFY_WARNING = "This indicates the use of reverse-proxy like HAProxy, "
-            + "TCPShield, BungeeCord, Velocity, etc. "
-            + "By default (configurable in the config) this plugin requests Mojang to verify the connecting IP "
-            + "to this server with the one used to log into Minecraft to prevent MITM attacks. In "
-            + "order to work this security feature, the actual client IP needs to be forwarding "
-            + "(keyword IP forwarding). This process will also be useful for other server "
-            + "features like IP banning, so that it doesn't ban the proxy IP.";
+    private static final String ADDRESS_VERIFY_WARNING = "这表示使用了反向代理，如 HAProxy、TCPShield、"
+            + "BungeeCord、Velocity 等。默认情况下（可在配置中配置），此插件要求"
+            + "Mojang 验证连接到此服务器的 IP 与用于登录 Minecraft 的 IP，"
+            + "以防止 MITM 攻击。为了使用此安全功能，需要转发实际客户端 IP"
+            + "（关键字 IP 转发）。此过程对于其他服务器功能（如 IP 禁止）也很有用，"
+            + "这样它就不会禁止代理 IP。";
 
     private final FastLoginBukkit plugin;
     private final PacketEvent packetEvent;
@@ -128,7 +127,7 @@ public class VerifyResponseTask implements Runnable {
         try {
             loginKey = EncryptionUtil.decryptSharedKey(privateKey, sharedSecret);
         } catch (GeneralSecurityException securityEx) {
-            disconnect("error-kick", "Cannot decrypt received contents", securityEx);
+            disconnect("error-kick", "无法解密收到的内容", securityEx);
             return;
         }
 
@@ -137,7 +136,7 @@ public class VerifyResponseTask implements Runnable {
                 return;
             }
         } catch (Exception ex) {
-            disconnect("error-kick", "Cannot decrypt received contents", ex);
+            disconnect("error-kick", "无法解密收到的内容", ex);
             return;
         }
 

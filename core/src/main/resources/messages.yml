@@ -1,102 +1,92 @@
-# FastLogin localization
-# Project site: https://www.spigotmc.org/resources/fastlogin.14153
-# Source code: https://github.com/games647/FastLogin
+# FastLogin 语言配置
+# 项目地址: https://www.spigotmc.org/resources/fastlogin.14153
+# 源代码: https://github.com/games647/FastLogin
 #
-# You can access the newest locale here:
+# 最新语言模板请访问:
 # https://github.com/games647/FastLogin/blob/main/core/src/main/resources/messages.yml
 #
-# You want to have language template? Visit the GitHub Wiki here:
+# 获取语言模板请访问GitHub Wiki:
 # https://github.com/games647/FastLogin/wiki/English
 
-# In order to split a message into separate lines you could just make a new line, but keep the '
-# Example:
-# bla: '&aFirst line
-# Second line
-# Third line'
+# 若需多行显示消息，请使用单引号包裹并按需换行
+# 示例:
+# bla: '&a第一行
+# 第二行
+# 第三行'
 
-# If you want to disable a message, you can just set it to an empty value.
-# In this case no message will be sent
-# Example:
+# 若要禁用某条消息，请将其设为空值
+# 示例:
 # bla: ''
 
-# ========= Shared (BungeeCord and Bukkit)   ============
+# ========= 通用配置 (BungeeCord 和 Bukkit) ============
 
-# Switch mode is activated and a new cracked player tries to join, who is not namely allowed
-switch-kick-message: '&4Only paid Minecraft allowed accounts are allowed to join this server'
+# 切换模式已激活，未授权的离线玩家尝试加入时提示
+switch-kick-message: '&4本服务器仅允许正版玩家加入'
 
-# GameProfile activated premium login in order to skip offline authentication
-add-premium: '&2Added to the list of premium players'
+# 将玩家添加至正版名单以跳过离线验证
+add-premium: '&2你已被加入正版玩家名单'
 
-# GameProfile activated premium login in order to skip offline authentication
-add-premium-other: '&2Player has been added to the premium list'
+# 将其他玩家添加至正版名单
+add-premium-other: '&2该玩家已被加入正版名单'
 
-# GameProfile is already set be a paid account
-already-exists: '&4You are already on the premium list'
+# 该玩家已存在于正版名单中
+already-exists: '&4你已在正版名单中'
 
-# GameProfile is already set be a paid account
-already-exists-other: '&4Player is already on the premium list'
+# 该玩家已存在于正版名单中
+already-exists-other: '&4该玩家已在正版名单中'
 
-# GameProfile was changed to be cracked
-remove-premium: '&2Removed from the list of premium players'
+# 将玩家移出正版名单
+remove-premium: '&2你已被移出正版玩家名单'
 
-# GameProfile is already set to be cracked
-not-premium: '&4You are not in the premium list'
+# 玩家未在正版名单中
+not-premium: '&4你未在正版名单中'
 
-# GameProfile is already set to be cracked
-not-premium-other: '&4Player is not in the premium list'
+# 玩家未在正版名单中
+not-premium-other: '&4该玩家未在正版名单中'
 
-# Admin wanted to change the premium of a user that isn't known to the plugin
-player-unknown: '&4Player not in the database'
+# 玩家未在数据库中
+player-unknown: '&4数据库中无该玩家记录'
 
-# Player kicked from anti bot feature
-kick-antibot: '&4Please wait a moment!'
+# 反机器人机制触发踢出提示
+kick-antibot: '&4请稍后再试！'
 
-# ========= Bukkit/Spigot ================
+# ========= Bukkit/Spigot 独有配置 ================
 
-# The user skipped the authentication, because it was a premium player
-auto-login: '&2Auto logged in'
+# 正版玩家跳过验证提示
+auto-login: '&2已自动登录'
 
-# FastLogin attempted to auto register user. The user account is registered to protect it from cracked players
-# If FastLogin is respecting auth plugin IP limit - the registration may have failed, however the message is still displayed
-# The password can be used if the mojang servers are down, and you still want your premium users to login (PLANNED)
-auto-register: '&2Tried auto registering with password: &7%password&2. You may want change it?'
+# 自动注册提示（包含生成密码）
+auto-register: '&2已尝试自动注册，密码为: &7%password&2。你无需记住它。'
 
-# GameProfile is not able to toggle the premium state of other players
-no-permission: '&4Not enough permissions'
+# 无权切换其他玩家状态
+no-permission: '&4权限不足'
 
-# Although the console can toggle the premium state, it's not possible for the console itself.
-# Because the console is not a user. (obviously, isn't it?)
-no-console: '&4You are not a player. You cannot toggle the premium state for YOURSELF as a console'
+# 控制台无法切换自身状态提示
+no-console: '&4控制台无法切换自身正版状态'
 
-# The user wants to toggle premium state, but BungeeCord support is enabled. This means the server have to communicate
-# with the BungeeCord first which will establish a connection with the database server.
-wait-on-proxy: '&6Sending request... (Do not forget to follow the BungeeCord setup guide referenced on the plugin page)'
+# 需等待BungeeCord通信时的提示
+wait-on-proxy: '&6正在发送请求...（请确保已按插件页面指引完成BungeeCord配置）'
 
-# When ProtocolLib is enabled and the plugin is unable to continue handling a login request after a requested premium
-# authentication. In this state the client expects a success packet with an encrypted connection or disconnect packet.
-# So we kick the player, if we cannot encrypt the connection. In other situation (example: premium name check),
-# the player will be just authenticated as cracked
-error-kick: '&4Error occurred'
+# 加密连接异常时的踢出提示
+error-kick: '&4发生错误'
 
-# The server sends a verify-token within the premium authentication request. If this doesn't match on response,
-# it could be another client sending malicious packets
-invalid-verify-token: '&4Invalid nonce token. Please verify you are using the correct server address'
+# 验证令牌不匹配提示
+invalid-verify-token: '&4验证令牌无效，请检查服务器地址是否正确'
 
-# The client sent no request join server request to the mojang servers which would proof that it's owner of that
-# account. Only modified clients would do this.
-invalid-session: '&4Invalid session'
+# 客户端未发送正版会话验证
+invalid-session: '&4无效会话'
 
-# The client sent a malicious packet without a login request packet
-invalid-request: '&4Invalid request'
+# 非法请求数据包
+invalid-request: '&4非法请求'
 
-# Message if the Bukkit isn't fully started to inject the packets
-not-started: '&cServer is not fully started yet. Please retry'
+# 服务器未完全启动提示
+not-started: '&c服务器尚未就绪，请稍后重试'
 
-# Warning message if a user invoked /premium command
-premium-warning: '&c&lWARNING: &6This command should&l only&6 be invoked if you are the owner of this paid Minecraft account
-Type &a/premium&6 again to confirm'
+# 执行/premium命令时的二次确认警告
+premium-warning: '&c&l警告: &6此命令仅适用于正版账户持有者！
+再次输入 &a/premium&6 以确认操作'
 
-# Invalid client public key that will be used in the future to send authenticated chat messages from clients
-invalid-public-key: '&cInvalid client public key. Please try to restart your game.'
+# 无效客户端公钥提示
+invalid-public-key: '&c客户端公钥无效，请重启游戏'
 
-# ========= Bungee/Waterfall only ================================
+# ========= Bungee/Waterfall 独有配置 ====================

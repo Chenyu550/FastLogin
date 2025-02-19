@@ -148,7 +148,7 @@ public class ProtocolLibListener extends PacketAdapter {
             } else if (packetType == ENCRYPTION_BEGIN) {
                 onEncryptionBegin(packetEvent, sender);
             } else {
-                plugin.getLog().warn("Unknown packet type received {}", packetType);
+                plugin.getLog().warn("收到未知数​​据包类型 {}", packetType);
             }
         } catch (FieldAccessException fieldAccessEx) {
             plugin.getLog().error("解析数据包 {} 失败", packetEvent.getPacketType(), fieldAccessEx);
@@ -176,7 +176,7 @@ public class ProtocolLibListener extends PacketAdapter {
 
         BukkitLoginSession session = plugin.getSession(sender.getAddress());
         if (session == null) {
-            plugin.getLog().warn("Profile {} tried to send encryption response at invalid state", sender.getAddress());
+            plugin.getLog().warn("配置文件 {} 尝试在无效状态下发送加密响应", sender.getAddress());
             sender.kickPlayer(plugin.getCore().getMessage("invalid-request"));
         } else {
             byte[] expectedVerifyToken = session.getVerifyToken();
@@ -202,7 +202,7 @@ public class ProtocolLibListener extends PacketAdapter {
                 if (clientPublicKey == null) {
                     Optional<byte[]> left = either.left();
                     if (!left.isPresent()) {
-                        plugin.getLog().error("No verify token sent if requested without player signed key {}", sender);
+                        plugin.getLog().error("如果请求时没有玩家签名的密钥，则不会发送验证令牌 {}", sender);
                         return false;
                     }
 
@@ -210,7 +210,7 @@ public class ProtocolLibListener extends PacketAdapter {
                 } else {
                     Optional<?> optSignatureData = either.right();
                     if (!optSignatureData.isPresent()) {
-                        plugin.getLog().error("No signature given to sent player signing key {}", sender);
+                        plugin.getLog().error("未向已发送玩家签名密钥提供签名 {}", sender);
                         return false;
                     }
 
@@ -227,7 +227,7 @@ public class ProtocolLibListener extends PacketAdapter {
             }
         } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException | NoSuchPaddingException
                  | IllegalBlockSizeException | BadPaddingException signatureEx) {
-            plugin.getLog().error("Invalid signature from player {}", sender, signatureEx);
+            plugin.getLog().error("玩家 {} 的签名无效", sender, signatureEx);
             return false;
         }
     }
@@ -262,7 +262,7 @@ public class ProtocolLibListener extends PacketAdapter {
                 // missing or incorrect
                 // expired always not allowed
                 player.kickPlayer(plugin.getCore().getMessage("invalid-public-key"));
-                plugin.getLog().warn("Invalid public key from player {}", username);
+                plugin.getLog().warn("来自玩家 {} 的公钥无效", username);
                 return;
             }
         }

@@ -66,7 +66,7 @@ public class FloodgateService extends BedrockService<FloodgatePlayer> {
             case "no-conflict":
                 return true;
             default:
-                core.getPlugin().getLog().error("Invalid value detected for {} in FastLogin/config.yml.", key);
+                core.getPlugin().getLog().error("在 FastLogin/config.yml 中检测到 {} 的无效值。", key);
                 return false;
         }
     }
