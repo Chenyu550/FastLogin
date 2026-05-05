@@ -32,13 +32,41 @@ Development builds contain the latest changes from the Source-Code. They are ble
 but also include features, enhancements and bug fixes that are not yet in a released version. If you click on the left
 side on `Changes`, you can see iterative change sets leading to a specific build.
 
-~~You can download them from here: [CodeMC(Jenkins)](https://ci.codemc.org/job/Games647/job/FastLogin/)~~
-
-Currently broken due changed usernames. Download it from [here](https://github.com/TuxCoding/FastLogin/releases)
-
-
+You can download them from here: [CodeMC(Jenkins)](https://ci.codemc.org/job/Games647/job/FastLogin/)
 
 ***
+
+## Technical Authentication
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as Client
+    participant S as Server
+    participant M as Mojang
+
+    C->>S: LOGIN_START (name)
+    Note over S: DB: check if username is saved as premium
+    S->>C: ENCRYPTION_REQUEST
+    Note right of C: Offline clients terminates connection here
+    Note right of C: In Offlinemode: LOGIN_SUCCESS is sent directly
+
+    rect rgb(240, 240, 240)
+        C->>M: POST /session/minecraft/join
+        C->>S: ENCRYPTION_RESPONSE
+        Note right of C: Client starts encrypting
+    end
+
+    Note over S: Decrypt and verify token
+    S->>M: GET /hasJoined (async)
+    M->>S: {uuid, name, skin}
+
+    Note over S: Server encrypts traffic
+    Note over S: Inject skin and premium UUID
+    S->>S: Re-inject LOGIN_START(name)
+
+    S->>C: LOGIN_SUCCESS
+```
 
 ## Commands
 
