@@ -23,37 +23,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.games647.fastlogin.bukkit.task;
+package com.github.games647.fastlogin.bukkit.hook;
 
+import com.github.games647.fastlogin.bukkit.FastLoginBukkit;
 import com.github.games647.fastlogin.core.hooks.AuthPlugin;
+import com.rabbitcomapny.api.Identifier;
+import com.rabbitcomapny.api.LoginResult;
+import com.rabbitcomapny.api.PasskyAPI;
+import com.rabbitcomapny.api.RegisterResult;
 import org.bukkit.entity.Player;
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+public class PasskyHook implements AuthPlugin<Player> {
 
-class DelayedAuthHookTest {
+    private final FastLoginBukkit plugin;
 
-    @Test
-    void createNewReflectiveInstance() throws ReflectiveOperationException {
-        DelayedAuthHook authHook = new DelayedAuthHook(null);
-        assertNotNull(authHook.newInstance(DummyHook.class));
+    public PasskyHook(FastLoginBukkit plugin) {
+        this.plugin = plugin;
     }
 
-    public static class DummyHook implements AuthPlugin<Player> {
-
-        @Override
-        public boolean forceLogin(Player player) {
-            return false;
+    @Override
+    public boolean forceLogin(Player player) {
+        LoginResult result = PasskyAPI.forceLogin(new Identifier(player), true);
+        if (!result.success) {
+            plugin.getLog().error("Failed to force login {} via Passky: {}", player.getName(), result.status);
         }
 
-        @Override
-        public boolean forceRegister(Player player, String password) {
-            return false;
+        return result.success;
+    }
+
+    @Override
+    public boolean forceRegister(Player player, String password) {
+        RegisterResult result = PasskyAPI.forceRegister(new Identifier(player), password, true);
+        if (!result.success) {
+            plugin.getLog().error("Failed to register {} via Passky: {}", player.getName(), result.status);
         }
 
-        @Override
-        public boolean isRegistered(String playerName) throws Exception {
-            return false;
-        }
+        return result.success;
+    }
+
+    @Override
+    public boolean isRegistered(String playerName) {
+        return PasskyAPI.isRegistered(new Identifier(playerName));
     }
 }

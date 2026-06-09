@@ -1,0 +1,25 @@
+# Configure how the release notes are generated for GitHub releases
+
+changelog:
+  # List of authors (like bots) and labels to exclude from pull requests
+  exclude:
+    labels:
+      - ignore-for-release
+  categories:
+    - title: 🛠 Breaking Changes
+      labels:
+        - Semver-Major
+        - breaking-change
+    - title: 🎉 Exciting New Features
+      labels:
+        - Semver-Minor
+        - enhancement
+    - title: 🐞 Bugfixes
+      labels:
+        - bug
+    - title: 👒 Dependencies
+      labels:
+        - dependencies
+    - title: Other Changes
+      labels:
+        - "*"

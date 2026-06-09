@@ -148,6 +148,9 @@ forwardSkin: true
 # 若仍要执行命令，需再次输入 /premium
 premium-warning: true
 
+# Kick players after they confirmed the command from above.
+kick-toggle: true
+
 # ======[[ 仅限Spigot+ProtocolLib用户 ]]======
 # 设为true时，启用不发送服务器IP至Mojang会话服务器的
 # 替代会话解析器。此设置适用于通过透明反向代理

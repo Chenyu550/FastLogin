@@ -121,7 +121,7 @@ public class ConnectListener {
         if (event.isOnlineMode()) {
             LoginSession session = plugin.getSession().get(event.getConnection().getRemoteAddress());
             if (session == null) {
-                plugin.getLog().warn("No active login session found for player {}", event.getUsername());
+                plugin.getLog().error("No active login session found for onlinemode player {}", event.getUsername());
                 return;
             }
 
@@ -192,6 +192,8 @@ public class ConnectListener {
     public void onDisconnect(DisconnectEvent disconnectEvent) {
         Player player = disconnectEvent.getPlayer();
         plugin.getCore().getPendingConfirms().remove(player.getUniqueId());
+
+        plugin.getSession().remove(player.getRemoteAddress());
     }
 
     /**

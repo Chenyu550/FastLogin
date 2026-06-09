@@ -10,42 +10,66 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up JDK
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'  # 根据 bungee 模块要求使用 Java 17
-        distribution: 'temurin'
-        cache: maven
-    
-    - name: Build with Maven
-      run: mvn --batch-mode --update-snapshots package
-    
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: Package
-        path: |
-          */target/*.jar
-          !*/target/original-*.jar
-          !*/target/*-shaded.jar
-    - name: 创建 SHORT_SHA
-      id: short-sha
-      run: echo "short_sha=${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
-    - name: Create Release
-      if: github.event_name != 'pull_request'
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          */target/*.jar
-          !*/target/original-*.jar
-          !*/target/*-shaded.jar
-        name: AutoRelease ${{ steps.short-sha.outputs.SHORT_SHA }}
-        draft: false
-        prerelease: false
-        tag_name: ${{ steps.short-sha.outputs.SHORT_SHA }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version-file: '.java-version'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: mvn package --batch-mode --threads 2.0C --no-snapshot-updates --strict-checksums --file pom.xml
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Package
+          path: |
+            */target/*.jar
+            !*/target/original-*.jar
+            !*/target/*-shaded.jar
+
+      - name: 创建 SHORT_SHA
+        id: short-sha
+        if: github.event_name != 'pull_request'
+        run: echo "short_sha=${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Create Release
+        if: github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            */target/*.jar
+            !*/target/original-*.jar
+            !*/target/*-shaded.jar
+          name: AutoRelease ${{ steps.short-sha.outputs.short_sha }}
+          draft: false
+          prerelease: false
+          tag_name: ${{ steps.short-sha.outputs.short_sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  dependency:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version-file: '.java-version'
+          cache: 'maven'
+
+      - name: Submit Dependency Snapshot
+        if: ${{ github.event_name == 'push' }}
+        uses: advanced-security/maven-dependency-submission-action@v5.0.0

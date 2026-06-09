@@ -168,7 +168,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.20.6-R0.1-SNAPSHOT</version>
+            <version>1.21.6-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <!-- Use our own newer api version -->
             <exclusions>
@@ -348,6 +348,22 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.zigazajc007</groupId>
+            <artifactId>Passky</artifactId>
+            <version>v3.0.0</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+
+            <!-- Exclude dependencies to prevent potential version conflicts-->
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!--No maven repository :(-->
         <dependency>
             <groupId>de.st_ddt.crazy</groupId>
@@ -379,7 +395,7 @@
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk18on</artifactId>
-            <version>1.78.1</version>
+            <version>1.80</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

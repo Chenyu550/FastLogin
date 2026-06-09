@@ -27,8 +27,6 @@ package com.github.games647.fastlogin.core.scheduler;
 
 import org.slf4j.Logger;
 
-import java.time.Duration;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -45,34 +43,5 @@ public class AsyncScheduler extends AbstractAsyncScheduler {
         super(logger, Executors.newVirtualThreadPerTaskExecutor());
 
         logger.info("正在使用 Java 21 优化的绿色线程");
-    }
-
-    @Override
-    public CompletableFuture<Void> runAsync(Runnable task) {
-        return CompletableFuture
-                .runAsync(() -> process(task), processingPool)
-                .exceptionally(error -> {
-                    logger.warn("线程池发生错误", error);
-                    return null;
-                });
-    }
-
-    @Override
-    public CompletableFuture<Void> runAsyncDelayed(Runnable task, Duration delay) {
-        return CompletableFuture.runAsync(() -> {
-            currentlyRunning.incrementAndGet();
-            try {
-                Thread.sleep(delay);
-                process(task);
-            } catch (InterruptedException interruptedException) {
-                // restore interrupt flag
-                Thread.currentThread().interrupt();
-            } finally {
-                currentlyRunning.getAndDecrement();
-            }
-        }, processingPool).exceptionally(error -> {
-            logger.warn("线程池发生错误", error);
-            return null;
-        });
     }
 }

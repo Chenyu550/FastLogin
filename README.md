@@ -1,5 +1,7 @@
 # FastLogin
 
+![A shield-shaped emblem with a bold lightning bolt on the left, resembling Minecraft blocks. To the right, "FastLogin" is written in teal, with the tagline: "Automatically detect and login premium Minecraft players"](https://github.com/user-attachments/assets/0788ef69-029b-465e-83a2-b8e7bccc6295 "FastLogin project logo.avif")
+
 检查玩家是否拥有正版Minecraft账户（Premium）。如果是，则可以跳过离线认证（登录插件）。因此他们无需输入密码。这也称为自动登录（auto-login）。
 
 ## 功能
@@ -28,6 +30,38 @@
 下载地址：https://github.com/Chenyu550/FastLogin/releases
 
 ***
+
+## Technical Authentication
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as Client
+    participant S as Server
+    participant M as Mojang
+
+    C->>S: LOGIN_START (name)
+    Note over S: DB: check if username is saved as premium
+    S->>C: ENCRYPTION_REQUEST
+    Note right of C: Offline clients terminates connection here
+    Note right of C: In Offlinemode: LOGIN_SUCCESS is sent directly
+
+    rect rgb(240, 240, 240)
+        C->>M: POST /session/minecraft/join
+        C->>S: ENCRYPTION_RESPONSE
+        Note right of C: Client starts encrypting
+    end
+
+    Note over S: Decrypt and verify token
+    S->>M: GET /hasJoined (async)
+    M->>S: {uuid, name, skin}
+
+    Note over S: Server encrypts traffic
+    Note over S: Inject skin and premium UUID
+    S->>S: Re-inject LOGIN_START(name)
+
+    S->>C: LOGIN_SUCCESS
+```
 
 ## 命令
 
