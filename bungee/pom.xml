@@ -109,6 +109,16 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
+        <!-- Geyser的传递依赖 -->
+        <repository>
+            <id>opencollab-main</id>
+            <url>https://repo.opencollab.dev/main/</url>
+        </repository>
+        <repository>
+            <id>minebench</id>
+            <url>https://repo.minebench.de/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -194,12 +204,6 @@
             <artifactId>api</artifactId>
             <version>${floodgate.version}</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- Bedrock player bridge -->
@@ -208,12 +212,6 @@
             <artifactId>core</artifactId>
             <version>${geyser.version}</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- We need the API, but it was excluded above -->
@@ -222,12 +220,6 @@
             <artifactId>api</artifactId>
             <version>${geyser.version}</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!--Login plugin-->

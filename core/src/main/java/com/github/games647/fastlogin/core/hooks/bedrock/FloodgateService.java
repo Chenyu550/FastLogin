@@ -81,7 +81,7 @@ public class FloodgateService extends BedrockService<FloodgatePlayer> {
     public boolean performChecks(String username, LoginSource source) {
         // check if the Bedrock player is linked to a Java account
         FloodgatePlayer floodgatePlayer = getBedrockPlayer(username);
-        boolean isLinked = floodgatePlayer.getLinkedPlayer() != null;
+        boolean isLinked = floodgatePlayer != null && floodgatePlayer.isLinked();
 
         if ("false".equals(allowConflict)
             || "linked".equals(allowConflict) && !isLinked) {

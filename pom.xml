@@ -52,8 +52,8 @@
 
         <lombook.version>1.18.34</lombook.version>
 
-        <floodgate.version>2.2.3-SNAPSHOT</floodgate.version>
-        <geyser.version>2.2.1-SNAPSHOT</geyser.version>
+        <floodgate.version>2.2.5-SNAPSHOT</floodgate.version>
+        <geyser.version>2.10.0-SNAPSHOT</geyser.version>
     </properties>
 
     <modules>

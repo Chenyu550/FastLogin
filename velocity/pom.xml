@@ -199,12 +199,6 @@
             <artifactId>core</artifactId>
             <version>${geyser.version}</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- Floodgate -->

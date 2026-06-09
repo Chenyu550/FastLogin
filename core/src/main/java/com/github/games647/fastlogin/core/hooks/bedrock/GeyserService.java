@@ -43,7 +43,7 @@ public class GeyserService extends BedrockService<GeyserSession> {
         super(core);
         this.geyser = geyser;
         this.core = core;
-        this.authType = GeyserImpl.getInstance().getConfig().getRemote().authType();
+        this.authType = geyser.config().java().authType();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class GeyserService extends BedrockService<GeyserSession> {
     @Override
     public GeyserSession getBedrockPlayer(String username) {
         for (GeyserSession gSess : geyser.getSessionManager().getAllSessions()) {
-            if (username.equals(gSess.getClientData().getUsername())) {
+            if (username.equals(gSess.bedrockUsername())) {
                 return gSess;
             }
         }
