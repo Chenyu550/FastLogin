@@ -45,7 +45,7 @@ public abstract class AbstractAsyncScheduler {
 
     public CompletableFuture<Void> runAsync(Runnable task) {
         return CompletableFuture.runAsync(() -> process(task), processingPool).exceptionally(error -> {
-            logger.warn("Error occurred on thread pool", error);
+            logger.warn("线程池发生错误", error);
             return null;
         });
     }
@@ -63,7 +63,7 @@ public abstract class AbstractAsyncScheduler {
                 currentlyRunning.getAndDecrement();
             }
         }, processingPool).exceptionally(error -> {
-            logger.warn("Error occurred on thread pool", error);
+            logger.warn("线程池发生错误", error);
             return null;
         });
     }

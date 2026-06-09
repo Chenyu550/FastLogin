@@ -1,6 +1,6 @@
 # FastLogin
 
-![A shield-shaped emblem with a bold lightning bolt on the left, resembling Minecraft blocks. To the right, "FastLogin" is written in teal, with the tagline: "Automatically detect and login premium Minecraft players"](https://github.com/user-attachments/assets/0788ef69-029b-465e-83a2-b8e7bccc6295 "FastLogin project logo.avif")
+![左侧是带有闪电图案、类似 Minecraft 方块风格的盾形标志，右侧以青绿色写着 FastLogin，并带有自动检测并登录正版 Minecraft 玩家的标语](https://github.com/user-attachments/assets/0788ef69-029b-465e-83a2-b8e7bccc6295 "FastLogin 项目标志.avif")
 
 检查玩家是否拥有正版Minecraft账户（Premium）。如果是，则可以跳过离线认证（登录插件）。因此他们无需输入密码。这也称为自动登录（auto-login）。
 
@@ -31,34 +31,34 @@
 
 ***
 
-## Technical Authentication
+## 技术认证流程
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant C as Client
-    participant S as Server
+    participant C as 客户端
+    participant S as 服务器
     participant M as Mojang
 
-    C->>S: LOGIN_START (name)
-    Note over S: DB: check if username is saved as premium
+    C->>S: LOGIN_START（名称）
+    Note over S: 数据库：检查用户名是否已保存为正版
     S->>C: ENCRYPTION_REQUEST
-    Note right of C: Offline clients terminates connection here
-    Note right of C: In Offlinemode: LOGIN_SUCCESS is sent directly
+    Note right of C: 离线客户端会在这里断开连接
+    Note right of C: 离线模式下会直接发送 LOGIN_SUCCESS
 
     rect rgb(240, 240, 240)
         C->>M: POST /session/minecraft/join
         C->>S: ENCRYPTION_RESPONSE
-        Note right of C: Client starts encrypting
+        Note right of C: 客户端开始加密通信
     end
 
-    Note over S: Decrypt and verify token
+    Note over S: 解密并验证令牌
     S->>M: GET /hasJoined (async)
     M->>S: {uuid, name, skin}
 
-    Note over S: Server encrypts traffic
-    Note over S: Inject skin and premium UUID
-    S->>S: Re-inject LOGIN_START(name)
+    Note over S: 服务器加密通信
+    Note over S: 注入皮肤和正版 UUID
+    S->>S: 重新注入 LOGIN_START（名称）
 
     S->>C: LOGIN_SUCCESS
 ```

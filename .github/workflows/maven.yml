@@ -16,17 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: 设置 JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version-file: '.java-version'
           cache: 'maven'
 
-      - name: Build with Maven
+      - name: 使用 Maven 构建
         run: mvn package --batch-mode --threads 2.0C --no-snapshot-updates --strict-checksums --file pom.xml
 
-      - name: Upload build artifacts
+      - name: 上传构建产物
         uses: actions/upload-artifact@v4
         with:
           name: Package
@@ -40,7 +40,7 @@ jobs:
         if: github.event_name != 'pull_request'
         run: echo "short_sha=${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
 
-      - name: Create Release
+      - name: 创建 Release
         if: github.event_name != 'pull_request'
         uses: softprops/action-gh-release@v1
         with:
@@ -63,13 +63,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: 设置 JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version-file: '.java-version'
           cache: 'maven'
 
-      - name: Submit Dependency Snapshot
+      - name: 提交依赖快照
         if: ${{ github.event_name == 'push' }}
         uses: advanced-security/maven-dependency-submission-action@v5.0.0

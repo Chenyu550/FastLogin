@@ -45,7 +45,7 @@ public class DeleteCommand implements TabExecutor {
     }
 
     /**
-     * Handles the command to delete profiles.
+     * 处理删除档案命令。
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -56,12 +56,12 @@ public class DeleteCommand implements TabExecutor {
         }
 
         if (plugin.getBungeeManager().isEnabled()) {
-            sender.sendMessage("Error: Cannot delete profile entries when using BungeeCord!");
+            sender.sendMessage("错误：使用 BungeeCord 时无法删除档案记录！");
             return false;
         }
 
         if (args.length < 1) {
-            sender.sendMessage("Error: Must supply username to delete!");
+            sender.sendMessage("错误：必须提供要删除的玩家名！");
             return false;
         }
 
@@ -70,9 +70,9 @@ public class DeleteCommand implements TabExecutor {
             if (!(sender instanceof ConsoleCommandSender)) {
                 Bukkit.getScheduler().runTask(plugin, () -> {
                     if (count == 0) {
-                        sender.sendMessage("Error: No profile entries found!");
+                        sender.sendMessage("错误：未找到档案记录！");
                     } else {
-                        sender.sendMessage("Deleted " + count + " matching profile entries");
+                        sender.sendMessage("已删除 " + count + " 条匹配的档案记录");
                     }
                 });
             }

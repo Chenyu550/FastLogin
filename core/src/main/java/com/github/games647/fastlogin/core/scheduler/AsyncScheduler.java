@@ -40,8 +40,8 @@ public class AsyncScheduler extends AbstractAsyncScheduler {
 
     public AsyncScheduler(Logger logger, Executor processingPool) {
         super(logger, processingPool);
-        logger.info("Using legacy platform scheduler for using an older Java version. "
-            + "Upgrade Java to 21+ for improved performance");
+        logger.info("正在使用旧版平台调度器，因为当前 Java 版本较旧。"
+            + "升级到 Java 21+ 可获得更好的性能");
     }
 
 }

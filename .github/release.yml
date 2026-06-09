@@ -1,25 +1,25 @@
-# Configure how the release notes are generated for GitHub releases
+# 配置 GitHub Releases 的发布说明生成方式
 
 changelog:
-  # List of authors (like bots) and labels to exclude from pull requests
+  # 要从拉取请求中排除的作者（如机器人）和标签
   exclude:
     labels:
       - ignore-for-release
   categories:
-    - title: 🛠 Breaking Changes
+    - title: 🛠 破坏性变更
       labels:
         - Semver-Major
         - breaking-change
-    - title: 🎉 Exciting New Features
+    - title: 🎉 新功能
       labels:
         - Semver-Minor
         - enhancement
-    - title: 🐞 Bugfixes
+    - title: 🐞 错误修复
       labels:
         - bug
-    - title: 👒 Dependencies
+    - title: 👒 依赖更新
       labels:
         - dependencies
-    - title: Other Changes
+    - title: 其他变更
       labels:
         - "*"

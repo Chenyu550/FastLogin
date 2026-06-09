@@ -121,7 +121,7 @@ public class ConnectListener {
         if (event.isOnlineMode()) {
             LoginSession session = plugin.getSession().get(event.getConnection().getRemoteAddress());
             if (session == null) {
-                plugin.getLog().error("No active login session found for onlinemode player {}", event.getUsername());
+                plugin.getLog().error("未找到在线模式玩家 {} 的有效登录会话", event.getUsername());
                 return;
             }
 

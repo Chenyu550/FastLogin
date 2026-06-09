@@ -148,7 +148,7 @@ forwardSkin: true
 # 若仍要执行命令，需再次输入 /premium
 premium-warning: true
 
-# Kick players after they confirmed the command from above.
+# 玩家确认上述命令后，将其踢出服务器。
 kick-toggle: true
 
 # ======[[ 仅限Spigot+ProtocolLib用户 ]]======

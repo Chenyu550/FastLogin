@@ -153,13 +153,13 @@ public abstract class SQLStorage implements AuthStorage {
 
             int rowsDeleted = deleteStmt.executeUpdate();
             if (rowsDeleted > 0) {
-                log.info("Deleted {}'s profile data", name);
+                log.info("已删除 {} 的档案数据", name);
             } else {
-                log.info("No profile data found for {}", name);
+                log.info("未找到 {} 的档案数据", name);
             }
             return rowsDeleted;
         } catch (SQLException sqlEx) {
-            log.error("Failed to query profile: {}", name, sqlEx);
+            log.error("查询档案失败：{}", name, sqlEx);
             return 0;
         }
     }

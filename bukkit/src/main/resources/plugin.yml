@@ -46,7 +46,7 @@ commands:
         permission: ${project.artifactId}.command.cracked
 
     fldelete:
-        description: 'Delete player profile data'
+        description: '删除玩家档案数据'
         usage: /<command> [player]
         permission: ${project.artifactId}.command.delete
 
@@ -70,5 +70,5 @@ permissions:
             ${project.artifactId}.command.cracked: true
 
     ${project.artifactId}.command.delete:
-        description: 'Delete other players profile data'
+        description: '删除其他玩家的档案数据'
         default: op

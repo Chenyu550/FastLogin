@@ -45,7 +45,7 @@ public class PasskyHook implements AuthPlugin<Player> {
     public boolean forceLogin(Player player) {
         LoginResult result = PasskyAPI.forceLogin(new Identifier(player), true);
         if (!result.success) {
-            plugin.getLog().error("Failed to force login {} via Passky: {}", player.getName(), result.status);
+            plugin.getLog().error("无法通过 Passky 强制登录 {}：{}", player.getName(), result.status);
         }
 
         return result.success;
@@ -55,7 +55,7 @@ public class PasskyHook implements AuthPlugin<Player> {
     public boolean forceRegister(Player player, String password) {
         RegisterResult result = PasskyAPI.forceRegister(new Identifier(player), password, true);
         if (!result.success) {
-            plugin.getLog().error("Failed to register {} via Passky: {}", player.getName(), result.status);
+            plugin.getLog().error("无法通过 Passky 注册 {}：{}", player.getName(), result.status);
         }
 
         return result.success;

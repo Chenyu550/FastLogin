@@ -1,71 +1,71 @@
-# Contributing Guide
+# 贡献指南
 
-## Architectural overview
+## 架构概览
 
 ```mermaid
 graph TB
-    subgraph "Minecraft Server Platforms"
-        SPIGOT["Spigot/Paper<br/>(Bukkit Module)"]
-        BUNGEE["BungeeCord<br/>(Proxy Module)"]
-        VELOCITY["Velocity<br/>(Velocity Module)"]
+    subgraph "Minecraft 服务器平台"
+        SPIGOT["Spigot/Paper<br/>（Bukkit 模块）"]
+        BUNGEE["BungeeCord<br/>（代理模块）"]
+        VELOCITY["Velocity<br/>（Velocity 模块）"]
     end
 
-    subgraph "FastLogin Core"
-        CORE["FastLoginCore<br/>Main Logic Engine"]
-        SESSION["LoginSession<br/>Session Management"]
-        AUTH["AuthPlugin Hook<br/>Auth Integration"]
-        RESOLVER["ProxyAgnosticMojangResolver<br/>Profile Resolution"]
-        STORAGE["SQLStorage<br/>Database Layer"]
-        ANTIBOT["AntiBotService<br/>Rate Limiting"]
+    subgraph "FastLogin 核心"
+        CORE["FastLoginCore<br/>主逻辑引擎"]
+        SESSION["LoginSession<br/>会话管理"]
+        AUTH["AuthPlugin Hook<br/>认证集成"]
+        RESOLVER["ProxyAgnosticMojangResolver<br/>资料解析"]
+        STORAGE["SQLStorage<br/>数据库层"]
+        ANTIBOT["AntiBotService<br/>限速"]
     end
 
-    subgraph "Bedrock Support"
-        FLOODGATE["FloodgateManagement<br/>Bedrock Players"]
-        GEYSER["GeyserService<br/>Geyser Integration"]
-        BEDROCK["BedrockService<br/>Base Service"]
+    subgraph "基岩版支持"
+        FLOODGATE["FloodgateManagement<br/>基岩版玩家"]
+        GEYSER["GeyserService<br/>Geyser 集成"]
+        BEDROCK["BedrockService<br/>基础服务"]
     end
 
-    subgraph "External Services"
+    subgraph "外部服务"
         MOJANG["Mojang API<br/>api.mojang.com"]
-        SESSION_SERVER["Session Server<br/>sessionserver.mojang.com"]
-        DATABASE[(SQL Database<br/>MySQL/SQLite)]
+        SESSION_SERVER["会话服务器<br/>sessionserver.mojang.com"]
+        DATABASE[(SQL 数据库<br/>MySQL/SQLite)]
     end
 
-    subgraph "Async Processing"
-        SCHEDULER["AbstractAsyncScheduler<br/>Thread Pool Management"]
+    subgraph "异步处理"
+        SCHEDULER["AbstractAsyncScheduler<br/>线程池管理"]
     end
 
-    subgraph "Messaging"
-        MESSAGES["ChannelMessage<br/>Proxy Messages <br/>(i.e. BungeeCord)"]
-        NAMEKEY["NamespaceKey<br/>Message Routing"]
+    subgraph "消息"
+        MESSAGES["ChannelMessage<br/>代理消息<br/>（如 BungeeCord）"]
+        NAMEKEY["NamespaceKey<br/>消息路由"]
     end
 
-    SPIGOT -->|loads| CORE
-    BUNGEE -->|loads| CORE
-    VELOCITY -->|loads| CORE
+    SPIGOT -->|加载| CORE
+    BUNGEE -->|加载| CORE
+    VELOCITY -->|加载| CORE
 
-    CORE -->|manages| SESSION
-    CORE -->|uses| AUTH
-    CORE -->|resolves profiles| RESOLVER
-    CORE -->|persists data| STORAGE
-    CORE -->|checks rate limits| ANTIBOT
-    CORE -->|handles bedrock| FLOODGATE
+    CORE -->|管理| SESSION
+    CORE -->|使用| AUTH
+    CORE -->|解析资料| RESOLVER
+    CORE -->|持久化数据| STORAGE
+    CORE -->|检查限速| ANTIBOT
+    CORE -->|处理基岩版| FLOODGATE
 
-    FLOODGATE -->|extends| BEDROCK
-    GEYSER -->|extends| BEDROCK
+    FLOODGATE -->|继承| BEDROCK
+    GEYSER -->|继承| BEDROCK
 
-    RESOLVER -->|queries| MOJANG
-    RESOLVER -->|verifies| SESSION_SERVER
+    RESOLVER -->|查询| MOJANG
+    RESOLVER -->|验证| SESSION_SERVER
 
-    STORAGE -->|connects to| DATABASE
+    STORAGE -->|连接到| DATABASE
 
-    CORE -->|schedules async| SCHEDULER
+    CORE -->|调度异步任务| SCHEDULER
 
-    MESSAGES -->|uses| NAMEKEY
-    CORE -->|sends via| MESSAGES
+    MESSAGES -->|使用| NAMEKEY
+    CORE -->|通过其发送| MESSAGES
 
-    AUTH -.->|delegates to| SPIGOT
-    AUTH -.->|delegates to| BUNGEE
+    AUTH -.->|委托给| SPIGOT
+    AUTH -.->|委托给| BUNGEE
 
-    ANTIBOT -->|rate limits| RESOLVER
+    ANTIBOT -->|限速| RESOLVER
 ```
